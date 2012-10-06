@@ -1,0 +1,55 @@
+%字体大小设置
+\tiny
+\scriptsize
+\footnotesize
+\small
+\normalsize
+\large
+\Large
+\LARGE
+\huge
+\Huge
+
+%部分字体加粗
+\textbf{}
+\underline{}
+%斜体
+\emph{}
+
+%字体颜色---------------
+\usepackage{color}
+\textcolor{color}{text}
+%字体背景
+\textbox{color}{text}
+\pagecolor{color}
+
+%Lists---------------
+\begin{enumerate}
+    \item text
+    \item text
+\end{enumerate}
+
+itemize
+
+\begin{description}
+    \item[First] text
+    \item[Second] text
+\end{description}
+
+%表格-----------------
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    a   &   b   &   c   &   d\\
+    \hline
+    1   &   2   &   3   &   4\\
+    \hline
+    \end{tabular}
+\end{center}
+
+
+
+
+
+
+
+
