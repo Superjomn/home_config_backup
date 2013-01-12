@@ -1,0 +1,31 @@
+SIC="~/Study/Swin-Info-Center" CD=. {
+ code.py
+ demo_data.py
+ map.dia
+ server.py
+
+ templates/ajax_get_update_messages.html
+ templates/ajax_load_more_news.html
+ templates/ajax_push_message.html
+ templates/ajax_reply.html
+ templates/circles.html
+ templates/items.html
+ templates/login.html
+ templates/own_messages.html
+ templates/profile_edit.html
+ templates/profile_join_circles.html
+ templates/profile_select_tags.html
+ templates/sigle.html
+ templates/signin.html
+ templates/template.html
+ templates/user_index.html
+ templates/user_index.html_backup
+ templates/user_profile.html
+
+ db/flushdb.sh
+ db/Ctrl.py
+ db/__init__.py
+ db/add_data.py
+ db/table_cr.py
+ db/testTable_cr.py
+ }
