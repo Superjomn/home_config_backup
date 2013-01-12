@@ -15,11 +15,15 @@ $
 
 # Command Line History (newest to oldest):
 :qa
-:Project
+:sh
 :w
+:q
+:e .vim/templates/
+:q!
+:e common.h
+:Project
 :e .
 :'<,'>qa
-:q
 :help project
 :help :project
 :Print
@@ -27,11 +31,9 @@ $
 :matric
 :split
 :e .vimrc
-:q!
 :help copy-move
 :marks
 :mark
-:sh
 :e ~/Study/beamer-ppt/
 :e 
 :help latex-suite.txt
@@ -50,6 +52,7 @@ $
 :Matrix
 
 # Search String History (newest to oldest):
+? ^\s*$
 ?/vs
 ?/map
 ?/UsePython
@@ -66,52 +69,26 @@ $
 # Input Line History (newest to oldest):
 
 # Registers:
-"0	LINE	0
-	
-""1	LINE	0
+"0	CHAR	0
+	pyx
+"1	LINE	0
 	
 "2	LINE	0
-	
+	print j
 "3	LINE	0
-	
+	print j
 "4	LINE	0
-	 db/flushdb.sh*
-	 db/Ctrl.py
-	 db/__init__.py
-	 db/add_data.py
-	 db/table_cr.py
-	 db/testTable_cr.py
+	print j
 "5	LINE	0
-	  
+	def 
 "6	LINE	0
-	
+	print 
 "7	LINE	0
-	
+	        pass
 "8	LINE	0
-	
+	    def hello(str);
 "9	LINE	0
-	\documentclass[a4paper]{ctexart}
-	\usepackage{geometry}
-	\usepackage{amsmath}
-	\usepackage{pstricks}
-	\usepackage{multicol}
-	\usepackage{pst-plot}
-	\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
-	\author{Chunwei Yan}
-	\title{Back Pagerank}
-	\begin{document}
-	    \maketitle
-	    你好，世界
-	    \begin{equation}
-	        e^{23}
-	        \sum^{hello}_{right}
-	    \end{equation}
-	    \begin{equation}
-	        e^{\log{2a} 
-	        \label{}
-	    \end{equation}<++>
 	
-	\end{document}
 "a@	CHAR	0
 	itemplates/>>j0
 "p	LINE	0
@@ -119,7 +96,7 @@ $
 	
 	::::::::::::::::::::::::
 	日期：公元2013年1月12日　星期六 
-	電腦：unix  0.016043 seconds 
+	電腦：unix  0.016366 seconds 
 	版本：vi=703 
 	編碼：utf-8　ucs-bom,utf-8,default,latin1 
 	環境：en_US.UTF-8 
@@ -137,35 +114,64 @@ $
 	  " :let g:vimim_toggle = 'sogou,baidu,qq,google' 
 	::::::::::::::::::::::::
 	
-	"server.py" 
-	"server.py" 424L, 12747C
+	".vimrc" 
+	".vimrc" 133L, 2863C
+	Error detected while processing function IMAP_Jumpfunc:
+	line   20:
+	E490: No fold found
+	-- SELECT ---- SELECT ---- SELECT ---- SELECT ---- SELECT ---- INSERT --
 	
-	"~/.vimprojects" 31L, 678C
 	
-	"~/Study/Swin-Info-Center/templates/ajax_load_more_news.html" 17L, 684C
-	file: templates/ajax_load_more_news.html, cwd: /home/chunwei/Study/Swin-Info-Center, lines: 17
+	".vimrc" 
+	".vimrc" 133L, 2863C written
+	".vimrc" 133L, 2863C written
 	
-	"~/Study/Swin-Info-Center/templates/profile_join_circles.html" [dos] 169L, 6156C
-	file: templates/profile_join_circles.html, cwd: /home/chunwei/Study/Swin-Info-Center, lines: 169
 	
-	"~/Study/Swin-Info-Center/db/flushdb.sh" 3L, 57C
-	file: db/flushdb.sh, cwd: /home/chunwei/Study/Swin-Info-Center, lines: 3
-"-	CHAR	0
-	 
+	-- INSERT --
+	
+	
+	".vimrc" 
+	".vimrc" 133L, 2861C written
+	".vimrc" 133L, 2861C written
+	
+	
+	
+""-	CHAR	0
+	VIMHOME
 
 # File marks:
-'0  3  0  ~/Study/Swin-Info-Center/db/flushdb.sh
-'1  18  0  ~/Study/Swin-Info-Center/server.py
-'2  31  1  ~/.vimprojects
-'3  129  0  ~/Study/home_backup/.vimrc
-'4  16  0  ~/hello.tex
-'5  15  13  ~/hello.tex
-'6  1  0  ~/hello.t
-'7  1  0  ~/hello.p
-'8  48  23  ~/.vimrc
-'9  1  0  ~/try.tex
+'0  66  22  ~/.vimrc
+'1  9  16  ~/new.ppt.tex
+'2  11  0  ~/.vim/templates
+'3  9  12  ~/tell.ppt.tex
+'4  9  0  ~/hello.tex
+'5  1  0  ~/hello.t
+'6  11  0  ~/helo.py
+'7  34  11  ~/hello.cpp
+'8  1  0  ~/.vim/plugin/clang_complete.vmb
+'9  2880  0  ~/Downloads/clang_complete.vmb
 
 # Jumplist (newest first):
+-'  66  22  ~/.vimrc
+-'  71  16  ~/.vimrc
+-'  1  0  ~/.vimrc
+-'  9  16  ~/new.ppt.tex
+-'  1  0  ~/new.ppt.tex
+-'  11  0  ~/.vim/templates
+-'  9  12  ~/tell.ppt.tex
+-'  1  0  ~/tell.ppt.tex
+-'  9  0  ~/hello.tex
+-'  1  0  ~/hello.tex
+-'  1  0  ~/hello.t
+-'  11  0  ~/helo.py
+-'  1  10  ~/helo.py
+-'  34  11  ~/hello.cpp
+-'  19  17  ~/hello.cpp
+-'  1  0  ~/hello.cpp
+-'  1  0  ~/.vim/plugin/clang_complete.vmb
+-'  2880  0  ~/Downloads/clang_complete.vmb
+-'  96  0  ~/Downloads/clang_complete.vmb
+-'  1  0  ~/Downloads/clang_complete.vmb
 -'  3  0  ~/Study/Swin-Info-Center/db/flushdb.sh
 -'  1  0  ~/Study/Swin-Info-Center/templates/profile_join_circles.html
 -'  9  0  ~/Study/Swin-Info-Center/templates/ajax_load_more_news.html
@@ -179,24 +185,18 @@ $
 -'  129  0  ~/Study/home_backup/.vimrc
 -'  1  0  ~/Study/home_backup/.vimrc
 -'  16  0  ~/hello.tex
--'  1  0  ~/hello.tex
 -'  15  13  ~/hello.tex
 -'  13  0  ~/hello.tex
--'  9  7  ~/hello.tex
--'  1  0  ~/hello.t
 -'  1  0  ~/hello.p
 -'  48  23  ~/.vimrc
 -'  45  13  ~/.vimrc
 -'  7  0  ~/.vimrc
--'  8  4  ~/helo.py
--'  1  0  ~/helo.py
+-'  7  4  ~/helo.py
 -'  1  0  ~/try.tex
 -'  131  11  ~/.vimrc
 -'  50  1  ~/.vimrc
 -'  47  1  ~/.vimrc
 -'  26  0  ~/.vimrc
--'  1  0  ~/.vimrc
--'  10  0  ~/helo.py
 -'  28  0  ~/.vimrc
 -'  87  1  ~/.vimrc
 -'  75  0  ~/.vimrc
@@ -249,22 +249,160 @@ $
 -'  12  22  ~/.emacs
 -'  340  2  ~/Downloads/ibus-el-0.3.2/ibus.el
 -'  1  0  ~/Downloads/ibus-el-0.3.2/ibus.el
--'  1  0  ~/Downloads/ibus-el-0.3.2/ibus-el-agent
--'  83  0  ~/Downloads/ibus-el-0.3.2/README
--'  1  0  ~/Downloads/ibus-el-0.3.2/README
--'  17  37  ~/.emacs
--'  7  4  ~/Study/home_backup/install.sh
--'  1  0  ~/Study/home_backup/install.sh
--'  7  4  ~/Study/home_backup/install.sh
--'  1  0  ~/Study/home_backup/install.sh
--'  7  4  ~/Study/home_backup/install.sh
--'  1  0  ~/Study/home_backup/install.sh
--'  7  4  ~/Study/home_backup/install.sh
--'  1  0  ~/Study/home_backup/install.sh
--'  83  0  ~/Downloads/ibus-el-0.3.2/README
--'  1  0  ~/Downloads/ibus-el-0.3.2/README
 
 # History of marks within files (newest to oldest):
+
+> ~/.vimrc
+	"	66	22
+	^	66	39
+	.	66	39
+	+	110	22
+	+	109	13
+	+	4	0
+	+	13	0
+	+	77	0
+	+	24	0
+	+	87	1
+	+	89	0
+	+	87	0
+	+	96	1
+	+	97	1
+	+	98	1
+	+	129	0
+	+	133	11
+	+	48	23
+	+	51	13
+	+	52	13
+	+	48	0
+	+	50	0
+	+	66	39
+
+> ~/n.ppt.tex
+	"	12	0
+	.	1	0
+	+	1	0
+
+> ~/new.ppt.tex
+	"	1	0
+	.	1	0
+	+	16	0
+	+	1	0
+
+> ~/new.ppt.te
+	"	1	0
+
+> ~/tell.ppt.tex
+	"	9	12
+	^	9	13
+	.	9	12
+	+	1	0
+	+	9	12
+
+> ~/hello.tex
+	"	9	0
+	^	13	37
+	.	13	34
+	+	1	0
+	+	9	19
+	+	13	34
+
+> ~/hello.t
+	"	1	0
+
+> ~/helo.py
+	"	11	0
+	.	11	0
+	+	3	23
+	+	5	19
+	+	6	19
+	+	3	18
+	+	14	0
+	+	14	0
+	+	7	19
+	+	7	11
+	+	4	11
+	+	7	11
+	+	1	14
+	+	12	7
+	+	12	5
+	+	12	0
+	+	1	10
+	+	7	0
+	+	7	0
+	+	7	0
+	+	7	0
+	+	8	18
+	+	11	0
+	+	8	18
+	+	11	0
+
+> ~/hello.cpp
+	"	34	11
+	^	34	12
+	.	34	11
+	+	26	10
+	+	36	0
+	+	35	12
+	+	6	7
+	+	25	0
+	+	8	9
+	+	9	5
+	+	29	9
+	+	28	8
+	+	30	23
+	+	35	0
+	+	11	12
+	+	24	1
+	+	14	0
+	+	10	0
+	+	14	10
+	+	17	3
+	+	24	0
+	+	24	0
+	+	12	11
+	+	13	13
+	+	2	8
+	+	13	19
+	+	14	20
+	+	16	25
+	+	19	10
+	+	20	5
+	+	22	19
+	+	21	33
+	+	32	6
+	+	31	23
+	+	32	17
+	+	3	18
+	+	24	0
+	+	24	0
+	+	4	0
+	+	24	0
+	+	24	0
+	+	34	11
+
+> ~/common.h
+	"	4	0
+	^	8	5
+	.	8	4
+	+	5	23
+	+	6	0
+	+	1	0
+	+	3	0
+	+	4	0
+	+	6	15
+	+	7	11
+	+	8	4
+
+> ~/.vim/plugin/clang_complete.vmb
+	"	1	0
+
+> ~/.vim/.VimballRecord
+	"	1	0
+	.	1	0
+	+	1	0
+
+> ~/Downloads/clang_complete.vmb
+	"	2880	0
 
 > ~/Study/Swin-Info-Center/server.py
 	"	1	0
@@ -327,62 +465,8 @@ $
 	.	129	0
 	+	129	0
 
-> ~/hello.tex
-	"	8	0
-	^	13	37
-	.	13	34
-	+	1	0
-	+	9	19
-	+	13	34
-
-> ~/.vimrc
-	"	50	0
-	^	52	14
-	.	50	0
-	+	110	22
-	+	109	13
-	+	4	0
-	+	13	0
-	+	77	0
-	+	24	0
-	+	87	1
-	+	89	0
-	+	87	0
-	+	96	1
-	+	97	1
-	+	98	1
-	+	129	0
-	+	133	11
-	+	48	23
-	+	51	13
-	+	52	13
-	+	48	0
-	+	50	0
-
-> ~/hello.t
-	"	1	0
-
 > ~/hello.p
 	"	1	0
-
-> ~/helo.py
-	"	8	4
-	^	10	0
-	.	11	0
-	+	3	23
-	+	5	19
-	+	6	19
-	+	3	18
-	+	13	0
-	+	13	0
-	+	9	19
-	+	10	11
-	+	4	11
-	+	7	11
-	+	2	7
-	+	11	7
-	+	11	5
-	+	11	0
 
 > ~/try.tex
 	"	1	0

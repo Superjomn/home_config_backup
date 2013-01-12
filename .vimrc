@@ -63,7 +63,7 @@ set laststatus=2
 :inoremap bb <C-^>
 
 "模板设置" 
-"" :autocmd BufNewFile *.pyx Or $VIMHOME/templates/pyx.tpl
+:autocmd BufNewFile *.ppt.tex 0r ~/.vim/templates/ppt.tex.tpl
 :autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.tpl
 "" :autocmd BufNewFile *.pyx 0r ~/.vim/templates/pyx.tpl
 
