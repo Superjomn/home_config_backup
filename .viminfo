@@ -8,21 +8,36 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/vs
+~MSle0~/digi
 
 # Last Substitute String:
 $
 
 # Command Line History (newest to oldest):
+:q
+:w
 :qa
 :sh
-:w
-:q
-:e .vim/templates/
-:q!
-:e common.h
-:Project
 :e .
+:e digital_city_security.tex
+:e 
+:e cloud_computing.tex
+:se
+:s
+:W
+:let g:vimim_shuangpin='abc'
+:let g:vimim_cloud='google'
+:let g:vimim_shuangpin='ms'
+:h
+:q!
+:Project
+:e try1.tex
+:h mbyte-IME
+:x
+:jumps
+:colorscheme blue
+:e .vim/templates/
+:e common.h
 :'<,'>qa
 :help project
 :help :project
@@ -35,7 +50,6 @@ $
 :marks
 :mark
 :e ~/Study/beamer-ppt/
-:e 
 :help latex-suite.txt
 :'<,'>q
 :vimim
@@ -52,8 +66,27 @@ $
 :Matrix
 
 # Search String History (newest to oldest):
-? ^\s*$
-?/vs
+?/digi
+?/di
+?/subsection
+?/graphic
+?/png
+? (\(\f\|\[\|]\|\s\)*hmm.tex
+?/clou
+?/chun
+?/chunwei
+?/menu
+?/mouse
+?/2
+?/Desktop
+?/Ne
+?/terminal
+?/Next
+?/NextW
+?/keybind
+?/Compile
+?/enu
+?/session
 ?/map
 ?/UsePython
 ?/filety
@@ -61,42 +94,82 @@ $
 ?/SIMK
 ?/SimKai
 ?/linum
+?/C
+? ^\s*$
+?/vs
+? (\(\f\|\[\|]\|\s\)*neighbour_pagerank.tex
+?/\V = P(q_t = S_j | q_{t-1} = Sj) \\quad 1\\lei/e+1
+?/ll
+?/color
+?/go
+? (\(\f\|\[\|]\|\s\)*
+?/tab
+?/cc
+?/equation
+?/logo
+?/install
+?/GoTo
+?/backbard
+?/eq
 
 # Expression History (newest to oldest):
 
 # Input Line History (newest to oldest):
+@1
+@w
 
 # Input Line History (newest to oldest):
 
 # Registers:
-"0	CHAR	0
-	pyx
-"1	LINE	0
+"0	LINE	0
+	\usepackage{graphicx}
+""1	LINE	0
+	deb http://packages.linuxmint.com/ nadia main upstream import
 	
+	deb http://mirrors.163.com/ubuntu/ quantal main universe restricted multiverse
+	deb-src http://mirrors.163.com/ubuntu/ quantal main universe restricted multiverse
+	deb http://mirrors.163.com/ubuntu/ quantal-security universe main multiverse restricted
+	deb-src http://mirrors.163.com/ubuntu/ quantal-security universe main multiverse restricted
+	deb http://mirrors.163.com/ubuntu/ quantal-updates universe main multiverse restricted
+	deb http://mirrors.163.com/ubuntu/ quantal-proposed universe main multiverse restricted
+	deb-src http://mirrors.163.com/ubuntu/ quantal-proposed universe main multiverse restricted
+	deb http://mirrors.163.com/ubuntu/ quantal-backports universe main multiverse restricted
+	deb-src http://mirrors.163.com/ubuntu/ quantal-backports universe main multiverse restricted
+	deb-src http://mirrors.163.com/ubuntu/ quantal-updates universe main multiverse restricted
 "2	LINE	0
-	print j
+	deb http://ubuntu.mirror.cambrium.nl/ubuntu/ hardy main
+	deb http://ubuntu.mirror.cambrium.nl/ubuntu/ lucid main universe
 "3	LINE	0
-	print j
-"4	LINE	0
-	print j
-"5	LINE	0
-	def 
-"6	LINE	0
-	print 
-"7	LINE	0
-	        pass
-"8	LINE	0
-	    def hello(str);
-"9	LINE	0
 	
+"4	LINE	0
+	
+"5	LINE	0
+	deb http://ftp.de.debian.org/debian sid main 
+"6	LINE	0
+	
+"7	LINE	0
+	deb http://ftp.debian-ports.org/debian sid main 
+"8	LINE	0
+	10 times puts "hello world"
+"9	LINE	0
+	        \begin{figure}[]
+	            \centering
+	            \includegraphics{qq.png}
+	            \caption{协议抓包结果}
+	            \label{fig:qq}
+	        \end{figure}
 "a@	CHAR	0
-	itemplates/>>j0
+	I\par jdd
+"i	CHAR	0
+	I\par jj
+"l	CHAR	0
+	lxl
 "p	LINE	0
 	
 	
 	::::::::::::::::::::::::
-	日期：公元2013年1月12日　星期六 
-	電腦：unix  0.016366 seconds 
+	日期：公元2013年1月17日　星期四 
+	電腦：unix  0.016687 seconds 
 	版本：vi=703 
 	編碼：utf-8　ucs-bom,utf-8,default,latin1 
 	環境：en_US.UTF-8 
@@ -114,234 +187,878 @@ $
 	  " :let g:vimim_toggle = 'sogou,baidu,qq,google' 
 	::::::::::::::::::::::::
 	
-	".vimrc" 
-	".vimrc" 133L, 2863C
-	Error detected while processing function IMAP_Jumpfunc:
-	line   20:
-	E490: No fold found
-	-- SELECT ---- SELECT ---- SELECT ---- SELECT ---- SELECT ---- INSERT --
+	"sources.list" 
+	"sources.list" 12L, 945C-- VISUAL LINE --
+	--No lines in buffer---- INSERT --
 	
 	
-	".vimrc" 
-	".vimrc" 133L, 2863C written
-	".vimrc" 133L, 2863C written
-	
-	
-	-- INSERT --
-	
-	
-	".vimrc" 
-	".vimrc" 133L, 2861C written
-	".vimrc" 133L, 2861C written
-	
-	
-	
-""-	CHAR	0
-	VIMHOME
+	"sources.list" 
+	"sources.list" 13L, 946C written
+	"sources.list" 13L, 946C written
+"-	CHAR	0
+	scim
 
 # File marks:
-'0  66  22  ~/.vimrc
-'1  9  16  ~/new.ppt.tex
-'2  11  0  ~/.vim/templates
-'3  9  12  ~/tell.ppt.tex
-'4  9  0  ~/hello.tex
-'5  1  0  ~/hello.t
-'6  11  0  ~/helo.py
-'7  34  11  ~/hello.cpp
-'8  1  0  ~/.vim/plugin/clang_complete.vmb
-'9  2880  0  ~/Downloads/clang_complete.vmb
+'0  13  0  /etc/apt/sources.list
+'1  4  0  ~/Study/beamer-ppt/.gitignore
+'2  4  0  ~/swin2/.gitignore
+'3  1  0  /etc/scim/global
+'4  17  17  /etc/environment
+'5  24  13  /etc/X11/xinit/xinput.d/all_ALL
+'6  20  16  /etc/X11/xinit/xinput.d/all_ALL
+'7  12  7  ~/scim-googlepinyin/INSTALL
+'8  63  0  ~/scim-googlepinyin/INSTALL
+'9  8  0  ~/scim-googlepinyin/INSTALL
 
 # Jumplist (newest first):
--'  66  22  ~/.vimrc
--'  71  16  ~/.vimrc
--'  1  0  ~/.vimrc
--'  9  16  ~/new.ppt.tex
--'  1  0  ~/new.ppt.tex
--'  11  0  ~/.vim/templates
--'  9  12  ~/tell.ppt.tex
--'  1  0  ~/tell.ppt.tex
--'  9  0  ~/hello.tex
--'  1  0  ~/hello.tex
--'  1  0  ~/hello.t
--'  11  0  ~/helo.py
--'  1  10  ~/helo.py
--'  34  11  ~/hello.cpp
--'  19  17  ~/hello.cpp
--'  1  0  ~/hello.cpp
--'  1  0  ~/.vim/plugin/clang_complete.vmb
--'  2880  0  ~/Downloads/clang_complete.vmb
--'  96  0  ~/Downloads/clang_complete.vmb
--'  1  0  ~/Downloads/clang_complete.vmb
--'  3  0  ~/Study/Swin-Info-Center/db/flushdb.sh
--'  1  0  ~/Study/Swin-Info-Center/templates/profile_join_circles.html
--'  9  0  ~/Study/Swin-Info-Center/templates/ajax_load_more_news.html
--'  1  0  ~/Study/Swin-Info-Center/server.py
--'  18  0  ~/Study/Swin-Info-Center/server.py
--'  1  0  ~/Study/Swin-Info-Center/map.dia
--'  6  0  ~/Study/Swin-Info-Center/code.py
--'  3  0  ~/Study/Swin-Info-Center/server.py
--'  31  1  ~/.vimprojects
--'  2  7  ~/.vimprojects
--'  129  0  ~/Study/home_backup/.vimrc
--'  1  0  ~/Study/home_backup/.vimrc
--'  16  0  ~/hello.tex
--'  15  13  ~/hello.tex
--'  13  0  ~/hello.tex
--'  1  0  ~/hello.p
--'  48  23  ~/.vimrc
--'  45  13  ~/.vimrc
--'  7  0  ~/.vimrc
--'  7  4  ~/helo.py
--'  1  0  ~/try.tex
--'  131  11  ~/.vimrc
--'  50  1  ~/.vimrc
--'  47  1  ~/.vimrc
--'  26  0  ~/.vimrc
--'  28  0  ~/.vimrc
--'  87  1  ~/.vimrc
--'  75  0  ~/.vimrc
--'  1  11  ~/right
--'  20  10  ~/.vim/templates/ppt.tex.tpl
--'  1  0  ~/.vim/templates/ppt.tex.tpl
--'  13  10  ~/.vim/templates/tex.tpl
--'  9  6  ~/.vim/templates/tex.tpl
--'  1  0  ~/.vim/templates/tex.tpl
--'  69  18  ~/.vimrc
--'  14  0  ~/Study/beamer-ppt/homework/back_pagerank.tex
--'  14  0  ~/Study/beamer-ppt/homework
--'  1  0  ~/Study/beamer-ppt/hmm.ppt.tex
--'  65  0  ~/Study/beamer-ppt
--'  22  0  ~/.vim/templates/ppt.tex.tpl
--'  16  1  ~/.vim/templates/tex.tpl
--'  8  17  ~/try.tex
--'  5  14  ~/try.tex
--'  4  4  ~/try.tex
--'  60  25  ~/.vim/ftplugin/latex-suite/texrc
--'  9  0  ~/.vim/ftplugin/latex-suite/texrc
--'  1  0  ~/.vim/ftplugin/latex-suite/texrc
--'  5  0  ~/.vim/ftplugin/tex.vim
--'  1  0  ~/.vim/ftplugin/tex.vim
--'  107  13  ~/.vimrc
--'  10  6  ~/hello.txt
--'  1  0  ~/hello.txt
--'  11  89  ~/hello.txt
--'  14  0  ~/hello.txt
--'  79  23  ~/.vimrc
--'  3  0  ~/.vimrc
--'  4  10  ~/hello.txt
--'  3  46  ~/hello.txt
--'  4  51  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  13  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  18  33  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  32  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  1  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  38  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  26  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  24  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  23  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  2  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  21  0  /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
--'  19  0  ~/Downloads/reftex-4.34/doc/install.texi
--'  1  0  ~/Downloads/reftex-4.34/doc/install.texi
--'  32  0  ~/c.el
--'  13  31  ~/.emacs
--'  1  0  ~/.emacs
--'  12  22  ~/.emacs
--'  340  2  ~/Downloads/ibus-el-0.3.2/ibus.el
--'  1  0  ~/Downloads/ibus-el-0.3.2/ibus.el
+-'  13  0  /etc/apt/sources.list
+-'  1  0  /etc/apt/sources.list
+-'  4  0  ~/Study/beamer-ppt/.gitignore
+-'  1  0  ~/Study/beamer-ppt/.gitignore
+-'  4  0  ~/swin2/.gitignore
+-'  1  0  ~/swin2/.gitignore
+-'  1  0  /etc/scim/global
+-'  17  17  /etc/environment
+-'  1  0  /etc/environment
+-'  24  13  /etc/X11/xinit/xinput.d/all_ALL
+-'  1  0  /etc/X11/xinit/xinput.d/all_ALL
+-'  20  16  /etc/X11/xinit/xinput.d/all_ALL
+-'  12  7  ~/scim-googlepinyin/INSTALL
+-'  1  0  ~/scim-googlepinyin/INSTALL
+-'  63  0  ~/scim-googlepinyin/INSTALL
+-'  8  0  ~/scim-googlepinyin/INSTALL
+-'  24  0  /etc/apt/sources.list
+-'  1  0  ~/Downloads/scim-sunpinyin-2.0.3/config
+-'  5  4  ~/Downloads/scim-sunpinyin-2.0.3/README
+-'  1  0  ~/Downloads/scim-sunpinyin-2.0.3/README
+-'  25  0  /etc/apt/sources.list
+-'  90  10  ~/Study/scrapy/scrapy/log.py
+-'  30  34  ~/Study/scrapy/scrapy/log.py
+-'  1  0  ~/Study/scrapy/scrapy/log.py
+-'  138  4  ~/Study/scrapy/scrapy/log.py
+-'  2  0  ~/Study/ruby/try.rb
+-'  1  0  ~/Study/ruby/try.rb
+-'  42  21  ~/Study/bottle/bottle.py
+-'  1  0  ~/Study/bottle/bottle.py
+-'  86  8  ~/Study/bottle/plugins/werkzeug/bottle_werkzeug.py
+-'  1  0  ~/Study/bottle/plugins/werkzeug/bottle_werkzeug.py
+-'  87  12  ~/Study/bottle/plugins/sqlite/bottle_sqlite.py
+-'  1  0  ~/Study/bottle/plugins/sqlite/bottle_sqlite.py
+-'  40  0  ~/Study/bottle/setup.py
+-'  1  0  ~/Study/bottle/setup.py
+-'  2  16  ~/Study/Makefile
+-'  1  0  ~/Study/Makefile
+-'  35  0  ~/Study/bottle/Makefile
+-'  1  0  ~/Study/bottle/Makefile
+-'  33  0  ~/Study/bottle/AUTHORS
+-'  1  0  ~/Study/bottle/AUTHORS
+-'  154  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  139  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  180  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  143  8  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  142  12  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  9  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  6  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  162  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  108  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  17  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  10  7  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  1  0  ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+-'  17  8  ~/Study/beamer-ppt/homework/pwd_security/try.tex
+-'  9  7  ~/Study/beamer-ppt/homework/pwd_security/try.tex
+-'  1  0  ~/Study/beamer-ppt/homework/pwd_security/try.tex
+-'  34  17  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  33  104  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  31  70  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  30  0  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  29  8  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  19  18  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  1  0  ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+-'  62  0  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  54  8  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  49  5  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  44  5  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  33  5  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  25  5  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  17  5  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  67  0  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  1  0  ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+-'  80  0  ~/Study/beamer-ppt/homework/pwd_security/cloud_computing.tex
+-'  1  0  ~/Study/beamer-ppt/homework/pwd_security/cloud_computing.tex
+-'  153  196  ~/Study/beamer-ppt/homework/hmm.tex
+-'  121  0  ~/Study/beamer-ppt/homework/hmm.tex
+-'  151  78  ~/Study/beamer-ppt/homework/hmm.tex
+-'  145  13  ~/Study/beamer-ppt/homework/hmm.tex
+-'  141  47  ~/Study/beamer-ppt/homework/hmm.tex
+-'  150  14  ~/Study/beamer-ppt/homework/hmm.tex
+-'  149  29  ~/Study/beamer-ppt/homework/hmm.tex
+-'  147  4  ~/Study/beamer-ppt/homework/hmm.tex
+-'  144  56  ~/Study/beamer-ppt/homework/hmm.tex
+-'  143  4  ~/Study/beamer-ppt/homework/hmm.tex
+-'  157  26  ~/Study/beamer-ppt/homework/hmm.tex
+-'  1  0  ~/Study/beamer-ppt/homework/pwd_security/x509_homework.tex
+-'  160  11  ~/Study/beamer-ppt/homework/hmm.tex
+-'  159  19  ~/Study/beamer-ppt/homework/hmm.tex
+-'  158  13  ~/Study/beamer-ppt/homework/hmm.tex
+-'  155  15  ~/Study/beamer-ppt/homework/hmm.tex
+-'  162  18  ~/Study/beamer-ppt/homework/hmm.tex
+-'  168  0  ~/Study/beamer-ppt/homework/hmm.tex
+-'  4  0  ~/Study/beamer-ppt/homework/hmm.tex
+-'  28  0  ~/Study/beamer-ppt/homework/hmm.tex
+-'  17  0  ~/Study/beamer-ppt/homework/hmm.tex
 
 # History of marks within files (newest to oldest):
 
-> ~/.vimrc
-	"	66	22
-	^	66	39
-	.	66	39
-	+	110	22
-	+	109	13
-	+	4	0
-	+	13	0
-	+	77	0
-	+	24	0
-	+	87	1
-	+	89	0
-	+	87	0
-	+	96	1
-	+	97	1
-	+	98	1
-	+	129	0
-	+	133	11
-	+	48	23
-	+	51	13
-	+	52	13
-	+	48	0
-	+	50	0
-	+	66	39
+> /etc/apt/sources.list
+	"	13	0
+	^	13	0
+	.	12	90
+	+	25	0
+	+	25	0
+	+	25	0
+	+	25	0
+	+	25	0
+	+	25	0
+	+	25	0
+	+	23	90
+	+	1	61
+	+	12	90
 
-> ~/n.ppt.tex
-	"	12	0
-	.	1	0
-	+	1	0
+> ~/Study/beamer-ppt/.gitignore
+	"	4	0
 
-> ~/new.ppt.tex
+> ~/swin2/.gitignore
+	"	4	0
+	.	3	0
+	+	3	0
+
+> /etc/scim/global
 	"	1	0
-	.	1	0
+
+> /etc/environment
+	"	17	17
+	^	17	18
+	.	17	0
+	+	17	0
+
+> /etc/X11/xinit/xinput.d/all_ALL
+	"	24	13
+	^	35	26
+	.	22	16
+	+	19	7
+	+	20	24
+	+	21	12
+	+	22	20
+	+	29	17
+	+	30	16
+	+	35	25
+	+	22	16
+
+> ~/scim-googlepinyin/INSTALL
+	"	12	7
+
+> ~/Downloads/scim-sunpinyin-2.0.3/config
+	"	1	0
+
+> ~/Downloads/scim-sunpinyin-2.0.3/README
+	"	5	4
+
+> ~/Study/scrapy/scrapy/log.py
+	"	1	0
+	^	30	35
+	.	30	0
+	+	30	0
+
+> ~/Study/ruby/try.rb
+	"	2	0
+	.	3	0
+	+	2	7
+	+	3	0
+
+> ~/Study/bottle/bottle.py
+	"	42	21
+
+> ~/Study/ruby/try.ry
+	"	1	19
+	^	1	20
+	.	1	19
+	+	1	19
+
+> ~/Study/bottle/plugins/werkzeug/bottle_werkzeug.py
+	"	86	8
+
+> ~/Study/bottle/plugins/sqlite/bottle_sqlite.py
+	"	87	12
+
+> ~/Study/bottle/setup.py
+	"	40	0
+
+> ~/Study/Makefile
+	"	2	16
+	^	2	17
+	.	2	16
+	+	2	16
+
+> ~/Study/bottle/Makefile
+	"	35	0
+
+> ~/Study/bottle/AUTHORS
+	"	33	0
+
+> ~/Study/beamer-ppt/homework/pwd_security/pwd_homework.tex
+	"	154	0
+	^	175	1
+	.	175	0
+	+	1	0
+	+	10	25
+	+	179	0
+	+	69	0
+	+	14	4
+	+	15	0
+	+	9	8
+	+	9	29
+	+	72	0
+	+	71	0
+	+	70	19
+	+	63	0
+	+	154	47
+	+	179	0
+	+	179	0
+	+	162	0
+	+	155	0
+	+	162	4
+	+	163	4
+	+	164	4
+	+	165	8
+	+	164	0
+	+	166	8
+	+	167	8
+	+	168	28
+	+	169	25
+	+	170	8
+	+	171	8
+	+	173	8
+	+	174	8
+	+	176	40
+	+	177	8
+	+	178	8
+	+	179	0
+	+	143	32
+	+	143	23
+	+	143	23
+	+	143	31
+	+	143	36
+	+	143	24
+	+	3	0
+	+	143	32
+	+	143	23
+	+	143	23
+	+	143	34
+	+	143	0
+	+	143	19
+	+	143	0
+	+	143	0
+	+	143	0
+	+	143	22
+	+	143	11
+	+	143	20
+	+	143	0
+	+	143	0
+	+	143	0
+	+	143	0
+	+	156	0
+	+	158	35
+	+	172	15
+	+	175	0
+
+> ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.tex
+	"	2	0
+	.	62	0
 	+	16	0
-	+	1	0
+	+	17	28
+	+	25	28
+	+	17	19
+	+	18	111
+	+	18	8
+	+	25	182
+	+	25	4
+	+	19	21
+	+	20	13
+	+	25	0
+	+	20	14
+	+	23	0
+	+	21	13
+	+	20	36
+	+	21	96
+	+	22	82
+	+	23	18
+	+	22	129
+	+	24	0
+	+	26	92
+	+	26	40
+	+	36	0
+	+	26	84
+	+	27	21
+	+	28	170
+	+	29	84
+	+	31	0
+	+	29	170
+	+	30	128
+	+	31	18
+	+	8	17
+	+	33	28
+	+	13	13
+	+	16	0
+	+	15	0
+	+	36	0
+	+	36	58
+	+	63	49
+	+	63	19
+	+	22	0
+	+	36	0
+	+	34	296
+	+	34	19
+	+	35	0
+	+	34	298
+	+	63	54
+	+	25	25
+	+	63	0
+	+	63	0
+	+	41	225
+	+	37	8
+	+	38	8
+	+	39	8
+	+	40	0
+	+	39	0
+	+	38	0
+	+	41	8
+	+	63	0
+	+	43	0
+	+	63	0
+	+	62	0
+	+	62	479
+	+	43	0
+	+	42	0
+	+	44	0
+	+	45	4
+	+	46	4
+	+	62	0
+	+	47	4
+	+	62	0
+	+	62	0
+	+	51	105
+	+	50	0
+	+	49	27
+	+	50	4
+	+	51	4
+	+	49	0
+	+	50	0
+	+	51	0
+	+	48	0
+	+	62	216
+	+	52	352
+	+	54	8
+	+	52	355
+	+	53	0
+	+	52	361
+	+	54	39
+	+	55	8
+	+	56	8
+	+	58	32
+	+	61	34
+	+	62	8
+	+	60	0
+	+	62	0
+	+	58	4
+	+	57	0
+	+	58	10
+	+	66	91
+	+	62	0
 
-> ~/new.ppt.te
+> ~/Study/beamer-ppt/homework/pwd_security/cloud_computing.tex
+	"	3	0
+	^	94	29
+	.	94	28
+	+	46	0
+	+	47	27
+	+	48	33
+	+	49	356
+	+	50	27
+	+	51	5
+	+	51	170
+	+	53	27
+	+	55	436
+	+	57	27
+	+	56	0
+	+	60	111
+	+	58	4
+	+	46	0
+	+	49	0
+	+	51	0
+	+	47	0
+	+	48	0
+	+	49	0
+	+	50	0
+	+	51	0
+	+	53	0
+	+	55	0
+	+	57	0
+	+	58	0
+	+	59	0
+	+	58	0
+	+	59	0
+	+	60	0
+	+	59	958
+	+	60	0
+	+	55	21
+	+	55	0
+	+	54	23
+	+	60	0
+	+	62	22
+	+	47	12
+	+	57	12
+	+	62	41
+	+	63	487
+	+	63	0
+	+	65	41
+	+	64	0
+	+	66	627
+	+	66	16
+	+	67	29
+	+	67	286
+	+	70	129
+	+	68	16
+	+	69	16
+	+	70	16
+	+	72	35
+	+	71	0
+	+	73	173
+	+	75	40
+	+	77	310
+	+	76	0
+	+	77	0
+	+	79	44
+	+	81	451
+	+	80	0
+	+	81	0
+	+	97	0
+	+	98	0
+	+	83	50
+	+	82	0
+	+	85	44
+	+	90	35
+	+	92	44
+	+	75	16
+	+	7	29
+	+	9	14
+	+	13	0
+	+	85	7
+	+	97	0
+	+	97	11
+	+	97	10
+	+	97	0
+	+	97	0
+	+	97	0
+	+	93	31
+	+	95	32
+	+	94	35
+	+	95	0
+	+	94	99
+	+	84	134
+	+	85	0
+	+	84	12
+	+	85	0
+	+	87	73
+	+	86	248
+	+	88	151
+	+	89	137
+	+	91	474
+	+	91	12
+	+	93	0
+	+	91	495
+	+	93	95
+	+	92	38
+	+	94	28
+
+> ~/Study/beamer-ppt/homework/pwd_security/x509_homework.tex
+	"	6	0
+	^	45	49
+	.	45	46
+	+	25	0
+	+	1	0
+	+	28	19
+	+	28	0
+	+	25	0
+	+	2	0
+	+	9	0
+	+	2	0
+	+	8	11
+	+	54	0
+	+	21	18
+	+	22	7
+	+	22	0
+	+	53	0
+	+	1	24
+	+	22	19
+	+	27	39
+	+	33	0
+	+	46	0
+	+	33	18
+	+	46	0
+	+	46	18
+	+	33	22
+	+	35	30
+	+	46	0
+	+	46	22
+	+	46	31
+	+	46	0
+	+	46	20
+	+	46	27
+	+	34	23
+	+	46	0
+	+	41	26
+	+	45	16
+	+	46	0
+	+	42	0
+	+	45	23
+	+	32	0
+	+	36	0
+	+	29	56
+	+	22	0
+	+	27	0
+	+	29	0
+	+	26	0
+	+	24	53
+	+	23	41
+	+	24	55
+	+	28	14
+	+	54	0
+	+	60	24
+	+	63	0
+	+	56	21
+	+	61	19
+	+	63	0
+	+	62	21
+	+	60	0
+	+	57	89
+	+	59	0
+	+	57	0
+	+	58	16
+	+	82	21
+	+	87	0
+	+	82	0
+	+	82	0
+	+	80	75
+	+	81	0
+	+	80	0
+	+	85	550
+	+	85	0
+	+	83	206
+	+	86	0
+	+	84	55
+	+	7	17
+	+	84	166
+	+	128	0
+	+	132	0
+	+	136	0
+	+	44	25
+	+	45	46
+	s	84	52
+
+> ~/Study/beamer-ppt/homework/pwd_security/try.tex
+	"	17	8
+	^	16	9
+	.	16	8
+	+	1	0
+	+	10	0
+	+	9	25
+	+	19	0
+	+	12	25
+	+	13	22
+	+	19	0
+	+	14	0
+	+	16	28
+	+	17	0
+	+	12	8
+	+	16	8
+
+> ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.tex
+	"	34	17
+	^	33	77
+	.	33	76
+	+	1	0
+	+	10	46
+	+	10	46
+	+	11	0
+	+	11	0
+	+	45	0
+	+	46	0
+	+	10	64
+	+	11	0
+	+	45	0
+	+	45	21
+	+	45	7
+	+	45	0
+	+	14	13
+	+	45	0
+	+	45	0
+	+	45	0
+	+	45	0
+	+	14	31
+	+	44	20
+	+	44	40
+	+	44	24
+	+	44	17
+	+	44	0
+	+	44	0
+	+	44	3
+	+	6	23
+	+	6	0
+	+	44	0
+	+	44	0
+	+	44	3
+	+	44	9
+	+	44	43
+	+	44	41
+	+	44	0
+	+	44	0
+	+	44	0
+	+	17	20
+	+	18	10
+	+	18	0
+	+	20	18
+	+	22	41
+	+	24	20
+	+	25	58
+	+	26	18
+	+	43	4
+	+	42	4
+	+	26	10
+	+	26	0
+	+	40	4
+	+	25	39
+	+	40	0
+	+	40	5
+	+	17	0
+	+	40	0
+	+	38	4
+	+	26	15
+	+	38	0
+	+	39	4
+	+	41	4
+	+	37	0
+	+	27	18
+	+	30	0
+	+	28	20
+	+	22	17
+	+	19	17
+	+	22	47
+	+	23	65
+	+	26	0
+	+	28	77
+	+	29	14
+	+	30	0
+	+	29	102
+	+	30	0
+	+	36	0
+	+	31	70
+	+	32	20
+	+	33	108
+	+	34	17
+	+	31	70
+	+	33	76
+
+> ~/Study/beamer-ppt/homework/hmm.tex
+	"	153	196
+	^	153	199
+	.	153	196
+	+	86	0
+	+	102	27
+	+	103	68
+	+	104	17
+	+	105	7
+	+	112	0
+	+	106	73
+	+	107	14
+	+	108	16
+	+	109	116
+	+	110	13
+	+	109	53
+	+	112	0
+	+	112	26
+	+	111	0
+	+	113	79
+	+	130	0
+	+	115	16
+	+	116	16
+	+	117	11
+	+	116	43
+	+	117	14
+	+	118	69
+	+	119	16
+	+	120	49
+	+	121	16
+	+	122	39
+	+	123	43
+	+	124	13
+	+	129	0
+	+	123	44
+	+	125	91
+	+	126	16
+	+	127	61
+	+	128	0
+	+	130	117
+	+	135	23
+	+	163	24
+	+	136	80
+	+	154	16
+	+	163	0
+	+	154	62
+	+	163	20
+	+	130	368
+	+	131	120
+	+	135	30
+	+	136	26
+	+	154	17
+	+	136	0
+	+	154	0
+	+	132	0
+	+	131	147
+	+	132	0
+	+	133	0
+	+	9	55
+	+	15	0
+	+	162	50
+	+	163	0
+	+	162	74
+	+	164	0
+	+	14	0
+	+	162	24
+	+	162	15
+	+	162	15
+	+	5	0
+	+	162	0
+	+	155	24
+	+	159	35
+	+	155	15
+	+	157	27
+	+	158	31
+	+	159	19
+	+	159	0
+	+	160	11
+	+	157	32
+	+	137	146
+	+	138	215
+	+	139	278
+	+	140	251
+	+	154	0
+	+	141	26
+	+	142	16
+	+	143	32
+	+	144	74
+	+	145	14
+	+	146	16
+	+	147	33
+	+	149	0
+	+	150	13
+	+	151	38
+	+	141	71
+	+	142	0
+	+	142	0
+	+	141	71
+	+	151	78
+	+	145	0
+	+	144	53
+	+	152	75
+	+	154	0
+	+	153	196
+	m	159	14
+	s	153	42
+
+> ~/Study/beamer-ppt/homework/[File List]
+	"	1	0
+	.	3	0
+	+	88	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	3	0
+
+> ~/Study/beamer-ppt/homework/hmm.log
+	"	747	0
+
+> ~/.i3/config
+	"	34	0
+	.	29	0
+	+	29	0
+	+	29	19
+	+	29	28
+	+	29	0
+	+	29	13
+	+	29	0
+
+> ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.
 	"	1	0
 
-> ~/tell.ppt.tex
-	"	9	12
-	^	9	13
-	.	9	12
-	+	1	0
-	+	9	12
-
-> ~/hello.tex
-	"	9	0
-	^	13	37
-	.	13	34
-	+	1	0
-	+	9	19
-	+	13	34
-
-> ~/hello.t
+> /usr/share/vim/vim73/doc/help.txt
 	"	1	0
 
-> ~/helo.py
-	"	11	0
-	.	11	0
-	+	3	23
-	+	5	19
-	+	6	19
-	+	3	18
-	+	14	0
-	+	14	0
-	+	7	19
-	+	7	11
-	+	4	11
-	+	7	11
-	+	1	14
-	+	12	7
-	+	12	5
-	+	12	0
-	+	1	10
-	+	7	0
-	+	7	0
-	+	7	0
-	+	7	0
-	+	8	18
-	+	11	0
-	+	8	18
-	+	11	0
+> ~/Study/beamer-ppt/homework/pwd_security/[File List]
+	"	23	0
+	^	182	29
+	.	3	0
+	+	260	0
+	+	225	0
+	+	225	0
+	+	225	0
+	+	225	0
+	+	184	0
+	+	174	0
+	+	182	0
+	+	135	0
+	+	96	0
+	+	49	0
+	+	3	0
+	t	5	0
+
+> ~/hello.c
+	"	15	2
+	.	15	0
+	+	15	6
+	+	15	0
+
+> ~/hello.txt
+	"	11	18
+	^	11	21
+	.	11	18
+	+	4	13
+	+	15	0
+	+	12	88
+	+	6	4
+	+	5	0
+	+	7	9
+	+	10	6
+	+	11	18
+
+> ~/Study/beamer-ppt/hmm.ppt.tex
+	"	207	0
+	.	209	0
+	+	209	3
+	+	209	0
+
+> ~/Study/beamer-ppt/hmm.ppt.pdf
+	"	1	0
+
+> ~/scim-1.4.14/INSTALL
+	"	101	2
 
 > ~/hello.cpp
-	"	34	11
-	^	34	12
-	.	34	11
+	"	70	3
+	^	70	4
+	.	70	3
 	+	26	10
-	+	36	0
+	+	73	0
 	+	35	12
 	+	6	7
 	+	25	0
@@ -379,40 +1096,116 @@ $
 	+	24	0
 	+	24	0
 	+	34	11
+	+	72	0
+	+	71	0
+	+	69	0
+	+	70	3
 
-> ~/common.h
+> ~/scim-tables-0.5.12/README
+	"	35	0
+
+> ~/scim-1.4.14/install-sh
+	"	520	0
+
+> ~/hello.t
+	"	1	27
+	^	1	30
+	.	1	27
+	+	1	27
+
+> ~/.config/openbox/rc.xml
+	"	614	22
+	^	267	0
+	.	267	0
+	+	242	20
+	+	268	21
+	+	287	0
+	+	242	26
+	+	268	19
+	+	242	19
+	+	243	0
+	+	242	18
+	+	268	18
+	+	181	0
+	+	241	27
+	+	286	0
+	+	286	0
+	+	283	44
+	+	284	16
+	+	285	13
+	+	286	0
+	+	277	24
+	+	286	0
+	+	254	21
+	+	255	16
+	+	268	0
+	+	256	12
+	+	257	20
+	+	259	16
+	+	262	20
+	+	264	16
+	+	268	0
+	+	217	0
+	+	267	0
+	s	268	4
+
+> /etc/xdg/openbox/rc.xml
 	"	4	0
-	^	8	5
-	.	8	4
-	+	5	23
-	+	6	0
-	+	1	0
+
+> /etc/xdg/openbox/menu.xml
+	"	4	0
+
+> ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/index.
+	"	1	0
+
+> ~/Downloads/musca-0.9.24/Makefile
+	"	9	0
+
+> ~/Downloads/dmenu-4.5/README
+	"	19	0
+
+> ~/[File List]
+	"	8	0
+	.	3	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	364	0
+	+	365	0
+	+	294	0
+	+	153	0
+	+	153	0
+	+	153	0
+	+	154	0
+	+	83	0
 	+	3	0
-	+	4	0
-	+	6	15
-	+	7	11
-	+	8	4
+	t	5	0
 
-> ~/.vim/plugin/clang_complete.vmb
-	"	1	0
+> ~/Study/beamer-ppt/notes/Introduction-to-Information-Retrieval/[File List]
+	"	23	0
+	.	3	0
+	+	44	0
+	+	44	0
+	+	44	0
+	+	44	0
+	+	44	0
+	+	3	0
+	t	5	0
 
-> ~/.vim/.VimballRecord
-	"	1	0
-	.	1	0
-	+	1	0
+> ~/Study/beamer-ppt/shasha_math/answer7.pdf
+	"	7	0
 
-> ~/Downloads/clang_complete.vmb
-	"	2880	0
-
-> ~/Study/Swin-Info-Center/server.py
-	"	1	0
-	.	18	0
-	+	18	0
+> ~/Study/beamer-ppt/shasha_math/answer8.tex
+	"	60	8
 
 > ~/.vimprojects
-	"	25	0
-	^	6	0
-	.	6	0
+	"	14	7
+	.	1	0
 	+	1	37
 	+	2	1
 	+	2	7
@@ -441,6 +1234,545 @@ $
 	+	25	14
 	+	24	0
 	+	6	0
+	+	1	0
+
+> ~/.vimrc
+	"	12	8
+	^	12	9
+	.	12	8
+	+	111	22
+	+	110	13
+	+	4	0
+	+	14	0
+	+	78	0
+	+	25	0
+	+	88	1
+	+	90	0
+	+	88	0
+	+	97	1
+	+	98	1
+	+	99	1
+	+	130	0
+	+	134	11
+	+	49	23
+	+	52	13
+	+	53	13
+	+	49	0
+	+	51	0
+	+	67	39
+	+	135	9
+	+	136	10
+	+	132	10
+	+	12	8
+
+> ~/Study/try.tex
+	"	12	19
+	^	12	20
+	.	12	19
+	+	14	0
+	+	22	29
+	+	25	0
+	+	32	192
+	+	30	0
+	+	25	20
+	+	26	8
+	+	32	0
+	+	25	19
+	+	29	17
+	+	26	33
+	+	28	20
+	+	28	0
+	+	26	46
+	+	27	38
+	+	28	36
+	+	29	18
+	+	27	33
+	+	28	0
+	+	31	0
+	+	25	0
+	+	1	0
+	+	9	15
+	+	13	0
+	+	12	19
+
+> ~/Study/try1.tex
+	"	2	0
+	^	1	9
+	.	2	0
+	+	1	0
+	+	1	10
+	+	1	0
+	+	2	0
+	+	1	0
+	+	2	0
+
+> /etc/xdg/awesome/rc.lua
+	"	275	12
+
+> ~/hel
+	"	1	3
+	^	1	6
+	.	1	3
+	+	1	3
+
+> /usr/share/vim/vim73/doc/mbyte.txt
+	"	971	0
+
+> ~/Study/beamer-ppt/works/research_summary_2012.tex
+	"	30	8
+	^	30	8
+	.	30	7
+	+	1	0
+	+	10	20
+	+	86	0
+	+	85	0
+	+	8	19
+	+	9	13
+	+	13	0
+	+	14	35
+	+	16	37
+	+	17	21
+	+	18	13
+	+	21	19
+	+	18	82
+	+	19	159
+	+	20	90
+	+	19	228
+	+	21	19
+	+	84	0
+	+	15	0
+	+	23	25
+	+	24	25
+	+	33	25
+	+	34	31
+	+	83	4
+	+	82	4
+	+	36	43
+	+	38	45
+	+	48	20
+	+	38	23
+	+	40	46
+	+	42	16
+	+	40	21
+	+	42	31
+	+	44	32
+	+	40	59
+	+	42	61
+	+	44	58
+	+	46	58
+	+	39	9
+	+	41	0
+	+	43	0
+	+	45	0
+	+	47	0
+	+	48	16
+	+	81	0
+	+	36	36
+	+	37	9
+	+	35	0
+	+	50	26
+	+	51	45
+	+	52	45
+	+	58	93
+	+	52	23
+	+	38	23
+	+	53	13
+	+	54	59
+	+	58	76
+	+	58	0
+	+	58	0
+	+	56	58
+	+	55	0
+	+	57	0
+	+	58	16
+	+	60	24
+	+	81	0
+	+	61	45
+	+	62	45
+	+	68	20
+	+	62	24
+	+	64	59
+	+	66	23
+	+	57	0
+	+	66	58
+	+	63	0
+	+	65	0
+	+	67	0
+	+	65	0
+	+	63	0
+	+	68	16
+	+	70	22
+	+	71	27
+	+	72	0
+	+	74	32
+	+	76	14
+	+	50	5
+	+	60	5
+	+	70	5
+	+	80	0
+	+	26	31
+	+	27	34
+	+	28	27
+	+	29	45
+	+	31	20
+	+	29	24
+	+	30	7
+
+> ~/Downloads/world.txt"
+	"	71	0
+
+> ~/Downloads/ls
+	"	1	0
+
+> ~/Study/sha_test/Test.py
+	"	12	0
+	^	15	16
+	.	15	15
+	+	9	17
+	+	16	11
+	+	1	17
+	+	2	0
+	+	4	22
+	+	8	7
+	+	6	19
+	+	7	22
+	+	6	20
+	+	16	0
+	+	11	20
+	+	13	18
+	+	14	27
+	+	15	15
+
+> ~/Study/sha_test/[File List]
+	"	9	0
+	.	3	0
+	+	3	0
+	t	5	0
+
+> ~/Study/sha_test/Sha.py
+	"	6	0
+	^	23	27
+	.	23	26
+	+	5	23
+	+	39	0
+	+	6	50
+	+	8	23
+	+	7	31
+	+	9	23
+	+	39	0
+	+	28	30
+	+	29	25
+	+	31	19
+	+	30	0
+	+	34	34
+	+	36	22
+	+	32	23
+	+	12	26
+	+	11	18
+	+	7	9
+	+	11	22
+	+	11	0
+	+	15	31
+	+	27	0
+	+	18	15
+	+	1	12
+	+	3	0
+	+	18	16
+	+	10	39
+	+	18	0
+	+	17	28
+	+	18	12
+	+	16	15
+	+	18	48
+	+	19	17
+	+	27	0
+	+	32	30
+	+	34	0
+	+	33	38
+	+	36	28
+	+	35	19
+	+	2	10
+	+	35	34
+	+	37	34
+	+	38	50
+	+	13	22
+	+	25	26
+	+	26	21
+	+	24	0
+	+	15	8
+	+	33	23
+	+	21	19
+	+	22	14
+	+	21	21
+	+	22	19
+	+	23	26
+	s	35	19
+
+> ~/Study/sha_test/shas.py
+	"	16	0
+	^	10	54
+	.	10	53
+	+	1	18
+	+	4	16
+	+	5	23
+	+	6	24
+	+	7	18
+	+	2	29
+	+	7	25
+	+	37	7
+	+	16	0
+	+	7	25
+	+	9	0
+	+	8	24
+	+	4	14
+	+	11	9
+	+	15	23
+	+	36	2
+	+	35	2
+	+	17	11
+	+	20	25
+	+	2	20
+	+	23	0
+	+	23	0
+	+	29	0
+	+	28	0
+	+	23	16
+	+	26	25
+	+	29	11
+	+	32	25
+	+	10	53
+
+> ~/swin2/templates/own_messages.html
+	"	77	76
+	^	77	77
+	.	77	76
+	+	76	19
+	+	76	0
+	+	77	12
+	+	77	76
+
+> ~/swin2/server.py
+	"	13	0
+	.	8	0
+	+	8	0
+
+> ~/Study/beamer-ppt/homework/pwd_security/x509_homework.
+	"	1	0
+
+> ~/Study/beamer-ppt/lear
+	"	1	0
+
+> /usr/local/texlive/2011/texmf-dist/tex/generic/pst-plot/pst-plot.tex
+	"	12	0
+
+> ~/Study/beamer-ppt/homework/pwd_security/network_security.tex
+	"	10	0
+	.	1	0
+	+	1	0
+
+> ~/Study/beamer-ppt/homework/pwd_security/digital_city_security.log
+	"	761	0
+
+> ~/try.ry
+	"	1	0
+
+> ~/try.ruby
+	"	1	17
+	^	1	18
+	.	1	17
+	+	1	17
+
+> ~/.ssh/id_rsa
+	"	1	0
+
+> ~/.ssh/id_rsa.pub
+	"	1	0
+
+> ~/.vim/ftplugin/latex-suite/texrc
+	"	145	35
+	^	145	36
+	.	145	35
+	+	60	25
+	+	333	0
+	+	89	39
+	+	115	38
+	+	145	35
+
+> ~/Study/beamer-ppt/homework/neighbour_pagerank.tex
+	"	19	0
+
+> ~/Study/beamer-ppt/homework/neighbour_pagerank.log
+	"	575	0
+
+> ~/Study/beamer-ppt/shasha_math/answer4.tex
+	"	34	0
+
+> ~/Study/beamer-ppt/shasha_math/answer6.1.tex
+	"	99	9
+
+> ~/Study/beamer-ppt/notes/vim_101_hacks.tex
+	"	28	0
+	.	28	0
+	+	1	0
+	+	9	19
+	+	12	0
+	+	12	20
+	+	12	19
+	+	12	15
+	+	29	31
+	+	13	42
+	+	28	17
+	+	13	20
+	+	14	3
+	+	29	0
+	+	14	37
+	+	28	13
+	+	29	0
+	+	15	57
+	+	16	27
+	+	17	27
+	+	28	0
+	+	18	48
+	+	19	33
+	+	28	0
+	+	28	0
+	+	20	48
+	+	21	37
+	+	28	0
+	+	22	49
+	+	23	33
+	+	28	0
+	+	24	51
+	+	25	23
+	+	26	21
+	+	27	30
+	+	28	0
+
+> ~/helo.py
+	"	1	0
+	.	11	0
+	+	3	23
+	+	5	19
+	+	6	19
+	+	3	18
+	+	14	0
+	+	14	0
+	+	7	19
+	+	7	11
+	+	4	11
+	+	7	11
+	+	1	14
+	+	12	7
+	+	12	5
+	+	12	0
+	+	1	10
+	+	7	0
+	+	7	0
+	+	7	0
+	+	7	0
+	+	8	18
+	+	11	0
+	+	8	18
+	+	11	0
+
+> ~/Study/lib/try.py
+	"	1	0
+	^	10	0
+	.	10	0
+	+	2	23
+	+	3	26
+	+	11	0
+	+	3	25
+	+	4	24
+	+	5	32
+	+	6	28
+	+	8	20
+	+	9	30
+	+	10	0
+
+> ~/hello.tex
+	"	16	0
+	^	5	2
+	.	1	0
+	+	1	0
+	+	9	19
+	+	15	34
+	+	13	0
+	+	13	0
+	+	10	3
+	+	14	3
+	+	5	0
+	+	10	0
+	+	11	15
+	+	12	13
+	+	14	0
+	+	11	0
+	+	11	0
+	+	1	0
+
+> ~/hello.
+	"	1	0
+
+> ~/Study/Swin-Info-Center/server.py
+	"	293	0
+	.	18	0
+	+	18	0
+
+> ~/Study/Swin-Info-Center/[File List]
+	"	6	0
+	.	3	0
+	+	1	0
+	+	1	0
+	+	1	0
+	+	3	0
+
+> ~/.vim/plugin/winmanager.vim
+	"	1316	0
+
+> ~/n.ppt.tex
+	"	12	0
+	.	1	0
+	+	1	0
+
+> ~/new.ppt.tex
+	"	1	0
+	.	1	0
+	+	16	0
+	+	1	0
+
+> ~/new.ppt.te
+	"	1	0
+
+> ~/tell.ppt.tex
+	"	9	12
+	^	9	13
+	.	9	12
+	+	1	0
+	+	9	12
+
+> ~/common.h
+	"	4	0
+	^	8	5
+	.	8	4
+	+	5	23
+	+	6	0
+	+	1	0
+	+	3	0
+	+	4	0
+	+	6	15
+	+	7	11
+	+	8	4
+
+> ~/.vim/plugin/clang_complete.vmb
+	"	1	0
+
+> ~/.vim/.VimballRecord
+	"	1	0
+	.	1	0
+	+	1	0
+
+> ~/Downloads/clang_complete.vmb
+	"	2880	0
 
 > ~/Study/Swin-Info-Center/templates/ajax_load_more_news.html
 	"	9	0
@@ -450,238 +1782,3 @@ $
 
 > ~/Study/Swin-Info-Center/db/flushdb.sh
 	"	3	0
-
-> ~/Study/Swin-Info-Center/code.py
-	"	6	0
-
-> ~/Study/Swin-Info-Center/map.dia
-	"	1	0
-
-> ~/.vim/doc/project.txt
-	"	289	0
-
-> ~/Study/home_backup/.vimrc
-	"	129	0
-	.	129	0
-	+	129	0
-
-> ~/hello.p
-	"	1	0
-
-> ~/try.tex
-	"	1	0
-	.	1	0
-	+	1	0
-	+	1	0
-	+	1	16
-	+	1	0
-	+	1	5
-	+	1	0
-	+	1	19
-	+	1	0
-	+	1	0
-	+	1	4
-	+	9	17
-	+	1	25
-	+	4	19
-	+	5	18
-	+	8	17
-	+	9	0
-	+	6	19
-	+	7	16
-	+	1	20
-	+	1	14
-	+	1	28
-	+	1	0
-	+	1	19
-	+	1	18
-	+	1	0
-	+	1	0
-	+	1	0
-	+	1	20
-	+	1	12
-	+	1	20
-	+	1	7
-	+	1	15
-	+	1	0
-
-> /usr/share/vim/vim73/doc/change.txt
-	"	1091	0
-
-> ~/right
-	"	1	11
-	^	1	12
-	.	1	11
-	+	1	11
-
-> ~/right.tex
-	"	15	14
-	^	15	15
-	.	15	15
-	+	1	0
-	+	9	17
-	+	14	3
-	+	13	0
-	+	15	15
-
-> ~/.vim/templates/ppt.tex.tpl
-	"	20	10
-	^	20	11
-	.	20	10
-	+	1	0
-	+	12	10
-	+	14	13
-	+	21	13
-	+	20	3
-	+	12	15
-	+	20	10
-
-> ~/.vim/templates/tex.tpl
-	"	13	10
-	^	13	11
-	.	13	10
-	+	1	0
-	+	14	14
-	+	15	13
-	+	14	0
-	+	9	10
-	+	12	0
-	+	12	0
-	+	13	3
-	+	14	0
-	+	9	15
-	+	13	10
-
-> ~/Study/beamer-ppt/hmm.ppt.tex
-	"	1	0
-
-> ~/Study/beamer-ppt/homework/back_pagerank.tex
-	"	14	0
-
-> ~/.vim/ftplugin/latex-suite/texrc
-	"	60	25
-	^	60	26
-	.	60	25
-	+	60	25
-
-> ~/.vim/ftplugin/tex.vim
-	"	5	0
-	^	3	43
-	.	5	0
-	+	5	31
-	+	3	0
-	+	3	0
-	+	5	0
-
-> ~/hello.txt
-	"	10	6
-	^	10	9
-	.	10	6
-	+	4	13
-	+	14	0
-	+	11	88
-	+	6	4
-	+	5	0
-	+	7	9
-	+	10	6
-
-> /usr/local/texlive/2011/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
-	"	4	51
-	^	4	52
-	.	4	51
-	+	23	0
-	+	24	0
-	+	26	0
-	+	25	0
-	+	26	0
-	+	27	0
-	+	28	0
-	+	27	0
-	+	28	0
-	+	29	0
-	+	30	0
-	+	29	0
-	+	30	0
-	+	31	0
-	+	32	0
-	+	32	0
-	+	32	0
-	+	33	0
-	+	34	0
-	+	35	0
-	+	36	0
-	+	37	0
-	+	38	0
-	+	11	30
-	+	13	0
-	+	12	32
-	+	11	31
-	+	12	33
-	+	20	0
-	+	32	0
-	+	12	0
-	+	36	0
-	+	37	0
-	+	32	0
-	+	12	33
-	+	4	51
-
-> ~/.emacs
-	"	1	0
-	.	7	0
-	+	18	37
-	+	1	42
-	+	1	44
-	+	1	0
-	+	1	0
-	+	1	0
-	+	16	0
-	+	1	0
-	+	3	37
-	+	15	1
-	+	3	22
-	+	3	16
-	+	3	24
-	+	3	21
-	+	4	24
-	+	5	33
-	+	6	30
-	+	12	27
-	+	13	30
-	+	14	31
-	+	3	0
-	+	8	0
-	+	11	0
-	+	8	0
-	+	3	0
-	+	7	0
-
-> ~/c.el
-	"	28	0
-
-> ~/Downloads/reftex-4.34/doc/install.texi
-	"	19	0
-
-> ~/Downloads/ibus-el-0.3.2/ibus.el
-	"	340	2
-
-> ~/Downloads/ibus-el-0.3.2/ibus-el-agent
-	"	1	0
-
-> ~/Downloads/ibus-el-0.3.2/README
-	"	83	0
-
-> ~/Study/home_backup/install.sh
-	"	7	4
-	^	2	5
-	.	2	4
-	+	5	20
-	+	4	20
-	+	8	16
-	+	6	0
-	+	8	0
-	+	6	0
-	+	7	4
-	+	6	4
-	+	5	4
-	+	2	4

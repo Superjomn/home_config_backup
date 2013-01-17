@@ -1,7 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/chunwei/Study/Swin-Info-Center/swin'
-let g:netrw_dirhist_2='/home/chunwei/Study/Swin-Info-Center'
-let g:netrw_dirhist_3='/home/chunwei/Study/Swin-Info-Center/templates'
-let g:netrw_dirhist_4='/home/chunwei/Study/Swin-Info-Center'
-let g:netrw_dirhist_5='/home/chunwei/.vim/templates'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/chunwei/Study/beamer-ppt/homework/pwd_security'
+let g:netrw_dirhist_2='/home/chunwei/Study/beamer-ppt/homework'
+let g:netrw_dirhist_3='/home/chunwei/Study/beamer-ppt'
+let g:netrw_dirhist_4='/home/chunwei/Study/beamer-ppt/homework'
+let g:netrw_dirhist_5='/home/chunwei/Study/beamer-ppt/homework/pwd_security'
+let g:netrw_dirhist_6='/home/chunwei/Study/beamer-ppt/homework'
+let g:netrw_dirhist_7='/home/chunwei/Study/beamer-ppt/homework/pwd_security'
+let g:netrw_dirhist_8='/home/chunwei/Study/beamer-ppt/homework'
+let g:netrw_dirhist_9='/home/chunwei/Study/beamer-ppt/homework/pwd_security'

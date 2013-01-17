@@ -9,6 +9,7 @@ set expandtab
 set smarttab
 set ai
 set si
+colo blue
 "set to auto read when a file is changed from the outside
 set autoread
 "when vimrc is edited,reload it
@@ -63,7 +64,9 @@ set laststatus=2
 :inoremap bb <C-^>
 
 "模板设置" 
+"ppt tex
 :autocmd BufNewFile *.ppt.tex 0r ~/.vim/templates/ppt.tex.tpl
+"常规
 :autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.tpl
 "" :autocmd BufNewFile *.pyx 0r ~/.vim/templates/pyx.tpl
 
@@ -71,10 +74,9 @@ set laststatus=2
 nnoremap <c-j> /<+.\{-1,}+><cr>c/+>/e<cr>
 inoremap <c-j> <ESC>/<+.\{-1,}+><cr>c/+>/e<cr>
 
-
 filetype plugin on
 
-
+"------------vimim-------------
 "for vimim c-6 for single word 
 "c-7 for long chinese paragraph
 let g:vimim_cloud='sogou'
@@ -126,8 +128,13 @@ filetype indent on
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+"trigle
+:map <C-c>c <F5>
 
-
-
-
-:map cc <F5>
+"---- winManager plugin------------
+:map <C-w>m :WMToggle <cr>
+:map <C-w>c :WMClose <cr>
+"---- 折叠 ---------------
+set fdm=marker
+set foldmarker=<<<,>>>
+set runtimepath+=/home/chunwei/.vim/bundle/vim-ibus/
