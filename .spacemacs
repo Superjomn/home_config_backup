@@ -29,43 +29,26 @@ values."
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
-   dotspacemacs-configuration-layers
-   '(
-     python
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     helm
-     auto-completion
-     better-defaults
-     emacs-lisp
-     git
-     markdown
-     org
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     ;; spell-checking
-     syntax-checking
-     version-control
-     )
+   dotspacemacs-configuration-layers '(python
+                                       ;; ----------------------------------------------------------------
+                                       ;; Example of useful layers you may want to use right away.
+                                       ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+                                       ;; <M-m f e R> (Emacs style) to install them.
+                                       ;; ----------------------------------------------------------------
+                                       helm auto-completion better-defaults emacs-lisp git markdown
+                                       org (shell :variables shell-default-height
+                                                  30 shell-default-position 'bottom)
+                                       ;; spell-checking
+                                       syntax-checking version-control)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
-                                      google-c-style
-                                      clang-format
-                                      epc
-                                      dash
-                                      elisp-format
-                                      )
+   dotspacemacs-additional-packages '(google-c-style clang-format epc dash elisp-format)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(org-projectile)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -133,14 +116,12 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(spacemacs-dark spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Source Code Pro" :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -297,8 +278,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
-   ))
+   dotspacemacs-whitespace-cleanup nil))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -307,12 +287,9 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-
-  (setq configuration-layer--elpa-archives
-        '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-          ("org-cn" . "http://elpa.zilongshanren.com/org/")
-          ("gnu-cn" . "http://elpa.zilongshanren.com/gnu/")
-          ))
+  (setq configuration-layer--elpa-archives '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
+                                             ("org-cn" . "http://elpa.zilongshanren.com/org/")
+                                             ("gnu-cn" . "http://elpa.zilongshanren.com/gnu/")))
 
 
   ;; end user-config
@@ -335,31 +312,27 @@ you should place your code here."
   (define-key evil-normal-state-map "vk" 'evil-window-top)
   (define-key evil-normal-state-map "vj" 'evil-window-bottom)
 
-;; auto insert code
+  ;; auto insert code
   (defun org-insert-src-block (src-code-type)
     "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
-    (interactive
-     (let ((src-code-types
-            '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++" "css"
-              "calc" "asymptote" "dot" "gnuplot" "ledger" "lilypond" "mscgen"
-              "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
-              "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "ruby"
-              "scheme" "sqlite")))
-       (list (ido-completing-read "Source code type: " src-code-types))))
-    (progn
-      (newline-and-indent)
-      (insert (format "#+BEGIN_SRC %s\n" src-code-type))
-      (newline-and-indent)
-      (insert "#+END_SRC\n")
-      (previous-line 2)
-      (org-edit-src-code)))
+    (interactive (let ((src-code-types '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++"
+                                         "css" "calc" "asymptote" "dot" "gnuplot" "ledger"
+                                         "lilypond" "mscgen" "octave" "oz" "plantuml" "R" "sass"
+                                         "screen" "sql" "awk" "ditaa" "haskell" "latex" "lisp"
+                                         "matlab" "ocaml" "org" "perl" "ruby" "scheme" "sqlite")))
+                   (list (ido-completing-read "Source code type: " src-code-types))))
+    (progn (newline-and-indent)
+           (insert (format "#+BEGIN_SRC %s\n" src-code-type))
+           (newline-and-indent)
+           (insert "#+END_SRC\n")
+           (previous-line 2)
+           (org-edit-src-code)))
   (add-hook 'org-mode-hook '(lambda ()
                               ;; keybiding for insert source code
-                              (local-set-key (kbd "C-c s")
-                                             'org-insert-src-block)))
+                              (local-set-key (kbd "C-c s") 'org-insert-src-block)))
   ;; add support for exectuate c++ in org-mode
-  (org-babel-do-load-languages
-   'org-babel-load-languages '((C . t) (python . t)))
+  (org-babel-do-load-languages 'org-babel-load-languages '((C . t)
+                                                           (python . t)))
 
   ;; Bind clang-format-buffer to tab on the c++-mode only:
   (add-hook 'c++-mode-hook 'clang-format-bindings)
@@ -371,9 +344,16 @@ you should place your code here."
   (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
   ;; yas set path
-  (setq yas-snippet-dirs
-        '("/home/chunwei/project/yas-snippets"))
+  (setq yas-snippet-dirs '("/home/chunwei/project/yas-snippets"))
 
+  ;; agenda
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "|" "DONE(d)")
+          (sequence "IDEA(i)" "BUG(b)" "|" "FIXED(f)")
+          (sequence "|" "CANCELED(c)")))
+
+
+  ;; end user-config
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -383,6 +363,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/project/myorgs/agenda.org")))
  '(package-selected-packages
    (quote
     (elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
