@@ -368,6 +368,7 @@ you should place your code here."
     )
 
   (defun chun/jump-to-header ()
+    "jump to header file."
     (interactive)
     (let* ((cur-file (buffer-file-name))
            suffix-pos
@@ -379,6 +380,7 @@ you should place your code here."
       (switch-to-buffer (find-file-noselect header-file))))
 
   (defun chun/jump-to-source ()
+    "jump to source file."
     (interactive)
     (let* ((cur-file (buffer-file-name))
            suffix-pos
