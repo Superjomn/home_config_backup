@@ -40,7 +40,10 @@ values."
                                                   30 shell-default-position 'bottom)
                                        ycmd
                                        spell-checking
-                                       syntax-checking version-control)
+                                       syntax-checking version-control
+                                       ;; company-clang
+                                       ;; flycheck
+                                       )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -425,25 +428,17 @@ you should place your code here."
       )
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (define-key c++-mode-map (kbd "M-f M-f") 'counsel-irony)
+  (define-key c++-mode-map (kbd "M-f f") 'counsel-irony)
 
-  ;; (setq-default irony-cdb-compilation-databases '(irony-cdb-libclang irony-cdb-clang-complete))
-  ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-  ;; (eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-  ;; (add-hook 'irony-mode-hook #'irony-eldoc)
-  ;; (eval-after-load 'company '(add-to-list 'company-backends 'counsel-irony))
-
-  ;; (require 'ycmd)
-  ;; (add-hook 'c++-mode-hook 'ycmd-mode)
-  ;; (setq ycmd-extra-conf-whitelist '("~/project/Paddle/*"))
-  ;; (setq ycmd-server-command (list "python" (file-truename "/home/chunwei/project/YouCompleteMe/third_party/ycmd/ycmd")))
-  ;; ;; (setq ycmd-server-command (list "python" (file-truename "/usr/bin/ycmd")))
-
-  ;; (require 'company-ycmd)
+  ;; (setq ycmd-server-command '("python2" "/home/chunwei/project/YouCompleteMe/third_party/ycmd/ycmd"))
+  ;; (add-hook 'ycmd-mode-hook 'company-ycmd-setup)
+  ;; (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup)
+  ;; (set-variable 'ycmd-global-config "/home/chunwei/.emacs.d/layers/+tools/ycmd/global_conf.py")
   ;; (company-ycmd-setup)
 
-  ;; (setq ycmd-force-semantic-completion t)
+  ;; (global-company-mode)
+  ;; (global-ycmd-mode)
 
   ;; end user-config
   )
