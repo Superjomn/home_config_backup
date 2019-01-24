@@ -302,6 +302,8 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (eval-after-load
+      (require 'cl-lib))
 
 
   ;; window split control
@@ -352,6 +354,56 @@ you should place your code here."
           (sequence "IDEA(i)" "BUG(b)" "|" "FIXED(f)")
           (sequence "|" "CANCELED(c)")))
 
+  (with-eval-after-load 'org
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((C . t)
+       ))
+    )
+
+  (defun chun/insert-cpp-src ()
+    (interactive)
+    (insert "#+BEGIN_SRC C++ :includes <iostream> <vector> <gtest/gtest.h> <glog/logging.h> :namespaces std :flags -std=c++11 -lgtest :results output\n")
+    (insert "#+END_SRC\n")
+    )
+
+  (defun chun/jump-to-header ()
+    (interactive)
+    (let* ((cur-file (buffer-file-name))
+           suffix-pos
+           header-file)
+      (setq suffix-pos (cl-search "." cur-file :from-end t))
+      (setq header-file (format "%s.%s"
+                                (cl-subseq cur-file 0 suffix-pos)
+                                "h"))
+      (switch-to-buffer (find-file-noselect header-file))))
+
+  (defun chun/jump-to-source ()
+    (interactive)
+    (let* ((cur-file (buffer-file-name))
+           suffix-pos
+           header-file)
+      (setq suffix-pos (cl-search "." cur-file :from-end t))
+      (setq header-file (format "%s.%s"
+                                (cl-subseq cur-file 0 suffix-pos)
+                                "cc"))
+      (switch-to-buffer (find-file-noselect header-file))))
+
+  (defun chun/--get-suffix (file)
+    "get file suffix"
+    (let* (suffix-pos)
+      (setq suffix-pos (cl-search "." file :from-end t))
+      (substring file suffix-pos nil)))
+
+  (defun chun/jump-to-header-or-source ()
+    "jump to header file if current file is source file, or else."
+    (interactive)
+    (let* ((cur-file (buffer-file-name))
+           (suffix (chun/--get-suffix cur-file)))
+      (message "suffix %s" suffix)
+      (if (string-equal suffix ".h")
+          (chun/jump-to-source)
+        (chun/jump-to-header))))
 
   ;; end user-config
   )
