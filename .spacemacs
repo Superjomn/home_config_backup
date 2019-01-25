@@ -29,7 +29,8 @@ values."
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
-   dotspacemacs-configuration-layers '(python
+   dotspacemacs-configuration-layers '(
+                                       javascriptpython
                                        ;; ----------------------------------------------------------------
                                        ;; Example of useful layers you may want to use right away.
                                        ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -49,11 +50,17 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(google-c-style clang-format epc dash elisp-format
-                                                     irony
-                                                     counsel
-                                                     irony-eldoc
+                                                     ;; irony
+                                                     ;; counsel
+                                                     ;; irony-eldoc
+                                                     ;; company-irony
+                                                     ;; flycheck-irony
+                                                     rtags
+                                                     company-rtags
+                                                     ;; rtags-helm
+
+                                                     irony-mode
                                                      company-irony
-                                                     flycheck-irony
                                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -416,30 +423,44 @@ you should place your code here."
           (chun/jump-to-source)
         (chun/jump-to-header))))
 
-  ;; for c++ IDE
+
+  ;; rtags
+  (require 'rtags)
+  (require 'company-rtags)
+  (setq rtags-completions-enabled t)
+  (eval-after-load 'company
+    '(add-to-list
+      'company-backends 'company-rtags))
+  (setq rtags-autostart-diagnostics t)
+  (rtags-enable-standard-keybindings)
+
+  ;; (require 'rtags-helm)
+  ;; (setq rtags-use-helm t)
+
+  ;; irony
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
-  ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (defun my-irony-mode-hook()
-    (define-key irony-mode-map
-      [remap completion-at-point] 'counsel-irony)
-    (define-key irony-mode-map
-      [remap complete-symbol] 'counsel-irony)
-      )
+  (add-hook 'objc-mode-hook 'irony-mode)
+
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (define-key c++-mode-map (kbd "M-f f") 'counsel-irony)
 
+  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+  (setq company-backends (delete 'company-semantic company-backends))
+  (eval-after-load 'company
+    '(add-to-list
+      'company-backends 'company-irony))
+  (setq company-idle-delay 0.5)
+  (define-key c-mode-map (kbd "M-,") 'company-complete)
+  (define-key c++-mode-map (kbd "M-,") 'company-complete)
 
-  ;; (setq ycmd-server-command '("python2" "/home/chunwei/project/YouCompleteMe/third_party/ycmd/ycmd"))
-  ;; (add-hook 'ycmd-mode-hook 'company-ycmd-setup)
-  ;; (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup)
-  ;; (set-variable 'ycmd-global-config "/home/chunwei/.emacs.d/layers/+tools/ycmd/global_conf.py")
-  ;; (company-ycmd-setup)
-
-  ;; (global-company-mode)
-  ;; (global-ycmd-mode)
-
+  ;; (cmake-ide-setup)
   ;; end user-config
   )
 
@@ -453,7 +474,7 @@ you should place your code here."
  '(org-agenda-files (quote ("~/project/myorgs/agenda.org")))
  '(package-selected-packages
    (quote
-    (flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (company-rtags auto-complete-clang rtags cmake-ide levenshtein flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
