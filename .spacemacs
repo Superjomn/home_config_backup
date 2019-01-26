@@ -58,9 +58,12 @@ values."
                                                      rtags
                                                      company-rtags
                                                      ;; rtags-helm
+                                                     company-irony-c-headers
+                                                     flycheck-rtags
 
-                                                     irony-mode
+                                                     irony
                                                      company-irony
+                                                     flycheck-irony
                                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -453,12 +456,50 @@ you should place your code here."
 
   (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
   (setq company-backends (delete 'company-semantic company-backends))
+  ;; (eval-after-load 'company
+  ;;   '(add-to-list
+  ;;     'company-backends 'company-irony))
+  (require 'company-irony-c-headers)
   (eval-after-load 'company
     '(add-to-list
-      'company-backends 'company-irony))
+      'company-backends '(company-irony-c-headers company-irony)))
+
   (setq company-idle-delay 0.5)
   (define-key c-mode-map (kbd "M-,") 'company-complete)
   (define-key c++-mode-map (kbd "M-,") 'company-complete)
+
+  ;; start company mode automatically
+  (add-hook 'c++-mode-hook '(lambda () (company-mode)))
+  (add-hook 'c-mode-hook '(lambda () (company-mode)))
+
+  ;; flycheck
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  (add-hook 'c-mode-hook 'flycheck-mode)
+
+  (add-hook 'c++-mode-hook '(lambda()
+                             (setq flycheck-gcc-language-standard "c++11")
+                             (setq flycheck-clang-include-path
+                                   '(
+                                     "/usr/include/c++/5"
+                                     "/home/chunwei/project/Paddle"
+                                     ))
+                             ))
+
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+  ;; (require 'flycheck-rtags)
+
+  ;; (defun my-flycheck-rtags-setup ()
+  ;;   (flycheck-select-checker 'rtags)
+  ;;   (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+  ;;   (setq-local flycheck-check-syntax-automatically nil))
+  ;; ;; c-mode-common-hook is also called by c++-mode
+  ;; (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+  ;; ;; work with flycheck and irony
+  ;; (eval-after-load 'flycheck
+  ;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
 
   ;; (cmake-ide-setup)
   ;; end user-config
@@ -474,7 +515,7 @@ you should place your code here."
  '(org-agenda-files (quote ("~/project/myorgs/agenda.org")))
  '(package-selected-packages
    (quote
-    (company-rtags auto-complete-clang rtags cmake-ide levenshtein flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (flycheck-rtags company-irony-c-headers company-rtags auto-complete-clang rtags cmake-ide levenshtein flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
