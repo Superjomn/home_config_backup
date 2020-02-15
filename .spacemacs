@@ -508,37 +508,28 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           (chun/jump-to-source)
         (chun/jump-to-header))))
 
-
   ;; rtags
-  (require 'rtags)
-  (require 'company-rtags)
-  (setq rtags-completions-enabled t)
-  (eval-after-load 'company
-    '(add-to-list
-      'company-backends 'company-rtags))
-  (setq rtags-autostart-diagnostics t)
-  (rtags-enable-standard-keybindings)
+  ;; (require 'rtags)
+  ;; (require 'company-rtags)
+  ;; (setq rtags-completions-enabled t)
+  ;; (eval-after-load 'company
+  ;;   '(add-to-list
+  ;;     'company-backends 'company-rtags))
+  ;; (setq rtags-autostart-diagnostics t)
+  ;; (rtags-enable-standard-keybindings)
 
   ;; (require 'rtags-helm)
   ;; (setq rtags-use-helm t)
+
+  (global-unset-key [f2])
+  (global-set-key [f2] 'chun/highlight-current-word)
 
 
   (python-env-setup)
   (c++-env-setup)
 
-  ;; (require 'flycheck-rtags)
 
-  ;; (defun my-flycheck-rtags-setup ()
-  ;;   (flycheck-select-checker 'rtags)
-  ;;   (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-  ;;   (setq-local flycheck-check-syntax-automatically nil))
-  ;; ;; c-mode-common-hook is also called by c++-mode
-  ;; (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
-  ;; ;; work with flycheck and irony
-  ;; (eval-after-load 'flycheck
-  ;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
-  ;; (cmake-ide-setup)
   ;; end user-config
   )
 
@@ -607,12 +598,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (eval-after-load 'flycheck
     '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)))
 
-  (chun-etags-setup)
+  (chun/--etags-setup)
 
   )
 ;; end c++
 
-(defun chun-etags-setup ()
+
+(defun chun/--etags-setup ()
   "set up the counsel-etags"
   (progn
     (eval-after-load 'counsel-etags
@@ -629,7 +621,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     ))
 
 
-(defun chun-copy-all-or-region ()
+(defun chun/copy-all-or-region ()
   (interactive)
   (if (use-region-p)
       (progn
@@ -639,6 +631,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       (kill-new (buffer-string))
       (message "Buffer content copied!"))))
 
+(defun chun/highlight-current-word ()
+  "Highlight the current word in the point"
+  (interactive)
+  (let*((word (thing-at-point 'word 'no-properties)))
+    (progn
+      (unhighlight-regexp t)
+      (highlight-regexp word)
+      )))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
