@@ -328,17 +328,17 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                              ("gnu-cn" . "http://elpa.zilongshanren.com/gnu/")))
 
   ;; ox-hugo config
-  (use-package ox-hugo
-    :ensure t            ;Auto-install the package from Melpa (optional)
-    :after ox)
-  ;; (use-package ox-hugo-auto-export) ;If you want the auto-exporting on file saves
   ;; (use-package ox-hugo
   ;;   :ensure t            ;Auto-install the package from Melpa (optional)
   ;;   :after ox)
-  ;; (use-package ox-hkgo-auto-export) ;If you want the auto-exporting on file saves
+  ;; ;; (use-package ox-hugo-auto-export) ;If you want the auto-exporting on file saves
+  ;; ;; (use-package ox-hugo
+  ;; ;;   :ensure t            ;Auto-install the package from Melpa (optional)
+  ;; ;;   :after ox)
+  ;; ;; (use-package ox-hkgo-auto-export) ;If you want the auto-exporting on file saves
 
-  (org :variables
-       org-enable-hugo-support t)
+  ;; (org :variables
+  ;;      org-enable-hugo-support t)
 
   (require 'ox-latex)
   (add-to-list 'org-latex-classes
@@ -522,11 +522,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   ;; (setq rtags-use-helm t)
 
   (global-unset-key [f2])
-  (global-set-key [f2] 'chun/highlight-current-word)
+  (global-set-key (quote [f2]) 'chun/highlight-current-word)
 
 
   (python-env-setup)
-  (c++-env-setup)
+  (c++-env-setup3)
 
 
 
@@ -545,15 +545,103 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (define-key python-mode-map [tab] 'yapfify-buffer))
 ;; <<<
 
+(defun c++-env-setup3 ()
+  (add-hook 'c++-mode-hook 'company-mode)
+  (add-hook 'c-mode-hook 'company-mode)
+  (add-hook 'c++-mode-hook 'iron-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  (add-hook 'c-mode-hook 'flycheck-mode)
+
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point))
+
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+  ;; use company
+  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+  (setq company-backends (delete 'company-semantic company-backends))
+  (eval-after-load 'company
+    '(add-to-list
+      'company-backends '('company-irony-c-headers company-irony)))
+
+  ;; run company manually
+  (setq company-idle-delay 0.5)
+  (define-key c-mode-map [(tab)] 'company-complete)
+  (define-key c++-mode-map [(tab)] 'company-complete)
+
+  ;; use flycheck
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+    )
+
+
+  ) ;; end setup3
+
+(defun c++-env-setup2()
+  (add-hook 'irony-mode-hook 'irony-eldoc)
+  (add-to-list 'company-backends 'company-irony)
+  (add-to-list 'company-backends 'company-irony-c-headers)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'company-mode)
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+  (add-hook 'c++-mode-hook '(lambda () (
+                                        (progn
+                                          (company-mode 1)
+                                          (flycheck-irony-setup)
+                                          (flycheck-mode 1)
+                                          (irony-mode 1)
+                                          )
+                                        )))
+
+  (eval-after-load 'flycheck '(lambda()
+                             (setq flycheck-gcc-language-standard "c++11")
+                             (setq flycheck-clang-include-path
+                                   '(
+                                     "/usr/include/c++/5"
+                                     "/home/chunwei/project/cinn2"
+                                     ))))
+
+  )
+
 ;; C++
 (defun c++-env-setup()
   "Setup the c++ environment"
   (progn
-  ;; irony
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+    ;; irony
+    (add-hook 'c++-mode-hook 'irony-mode)
+    (add-hook 'c++-mode-hook 'company-mode)
+    (add-hook 'c-mode-hook 'irony-mode)
+
+
+    (eval-after-load 'company
+      '(lambda () (
+                   (progn
+
+                     ;; remove all the predefined backends
+                     (setf company-backends '())
+                     (add-to-list 'company-backends 'company-keywords)
+
+                     ))))
+
+    (eval-after-load 'irony-mode
+      '(lambda () (progn
+                    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+                    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+                    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+                    (add-to-list 'company-backends 'company-irony)
+                    (add-to-list 'company-backends 'company-irony-c-headers)
+
+                    )))
+
 
   (defun my-irony-mode-hook ()
     (define-key irony-mode-map [remap completion-at-point]
@@ -561,39 +649,40 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (define-key irony-mode-map [remap complete-symbol]
       'irony-completion-at-point-async))
 
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-  (setq company-backends (delete 'company-semantic company-backends))
+  ;; (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+  ;; (setq company-backends (delete 'company-semantic company-backends))
   ;; (eval-after-load 'company
   ;;   '(add-to-list
   ;;     'company-backends 'company-irony))
-  (require 'company-irony-c-headers)
-  (eval-after-load 'company
-    '(add-to-list
-      'company-backends '(company-irony-c-headers company-irony)))
 
-  (setq company-idle-delay 0.5)
+  ;; (require 'company-irony-c-headers)
+  ;; (eval-after-load 'company
+  ;;   '(add-to-list
+  ;;     'company-backends '(company-irony-c-headers company-irony)))
+
+  ;; (setq company-idle-delay 0.5)
+
   (define-key c-mode-map (kbd "M-,") 'company-complete)
   (define-key c++-mode-map (kbd "M-,") 'company-complete)
 
-  ;; start company mode automatically
-  (add-hook 'c++-mode-hook '(lambda () (company-mode)))
-  (add-hook 'c-mode-hook '(lambda () (company-mode)))
+  ;; ;; start company mode automatically
+  ;; (add-hook 'c++-mode-hook '(lambda () (company-mode)))
+  ;; (add-hook 'c-mode-hook '(lambda () (company-mode)))
 
   ;; flycheck
   (add-hook 'c++-mode-hook 'flycheck-mode)
   (add-hook 'c-mode-hook 'flycheck-mode)
 
-  (add-hook 'c++-mode-hook '(lambda()
-                             (setq flycheck-gcc-language-standard "c++11")
-                             (setq flycheck-clang-include-path
-                                   '(
-                                     "/usr/include/c++/5"
-                                     "/home/chunwei/project/Paddle"
-                                     ))
-                             ))
+  ;; (eval-after-load 'flycheck '(lambda()
+  ;;                            (setq flycheck-gcc-language-standard "c++11")
+  ;;                            (setq flycheck-clang-include-path
+  ;;                                  '(
+  ;;                                    "/usr/include/c++/5"
+  ;;                                    "/home/chunwei/project/cinn2"
+  ;;                                    ))
+  ;;                            )
+  ;;           )
 
   (eval-after-load 'flycheck
     '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)))
