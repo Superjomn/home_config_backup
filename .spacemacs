@@ -80,6 +80,8 @@ values."
                                                      flycheck-irony
 
                                                      ox-hugo
+
+                                                     cmake-ide
                                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -508,31 +510,86 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           (chun/jump-to-source)
         (chun/jump-to-header))))
 
-  ;; rtags
-  ;; (require 'rtags)
-  ;; (require 'company-rtags)
-  ;; (setq rtags-completions-enabled t)
-  ;; (eval-after-load 'company
-  ;;   '(add-to-list
-  ;;     'company-backends 'company-rtags))
-  ;; (setq rtags-autostart-diagnostics t)
-  ;; (rtags-enable-standard-keybindings)
-
-  ;; (require 'rtags-helm)
-  ;; (setq rtags-use-helm t)
-
+  ;; set highlight a word
   (global-unset-key [f2])
   (global-set-key (quote [f2]) 'chun/highlight-current-word)
 
 
   (python-env-setup)
-  (c++-env-setup3)
+
+  (chun/c++-env-setup)
+
+  ) ;; end user-config
+
+(defun chun/local-set-keys (key-commands)
+  "Set multiple local bindings with KEY-COMMANDS list."
+  (let ((local-map (current-local-map)))
+    (dolist (kc key-commands)
+      (define-key local-map
+	      (kbd (car kc))
+	      (cdr kc)))))
+
+;; C++
+(defun chun/c++-env-setup ()
+  "Setup the c++ environment with following features:
+- auto complete with irony
+- auto error detect with flycheck
+- auto compile db generation with cmake-ide
+"
+  ;; config cmake-ide, which can generate the compiilation database automatically.
+  ;; it can compile the project easily.
+  ;; It is the key to c++ auto complete feature, works fine with irony.
+  (add-hook 'c++-mode-hook '(lambda()
+		                          (cmake-ide-setup)
+		                           ))
+  ;; set the build directory for cmake-ide, or it will generate random paths and lose control.
+  (eval-after-load 'cmake-ide
+    ;; (setq cmake-ide-build-pool-dir "/home/chunwei/project/cinn2/build")
+    ;; (setq cmake-ide-build-dir "/home/chunwei/project/cinn2/build")
+    (setq cmake-ide-dir "/home/chunwei/project/cinn2/build")
+    )
+
+  (defun chun/irony ()
+    "Irony mode configuration."
+    (interactive)
+
+    ;; should require the dependencies first, or it will fail to setq.
+    (require 'company)
+    (require 'irony)
+    (require 'flycheck)
+
+    (add-hook 'irony-mode-hook 'irony-eldoc)
+    (add-to-list 'company-backends 'company-irony)
+    (add-to-list 'company-backends 'company-irony-c-headers)
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
+    (when (or (eq major-mode 'c-mode)	; Prevent from being loaded by c derived mode
+	            (eq major-mode 'c++-mode))
+      (irony-mode 1)))
+
+  (add-hook 'c++-mode-hook 'chun/irony)
+  (add-hook 'c++-mode-hook 'company-mode)
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'flycheck-mode)
+
+  ;; set up flycheck prompt style.
+  (defun chun/flycheck ()
+    "Configurate flycheck."
+    (add-to-list 'display-buffer-alist
+	               `(,(rx bos "*Flycheck errors*" eos)
+		               (display-buffer-reuse-window
+		                display-buffer-in-side-window)
+		               (side            . bottom)
+		               (reusable-frames . visible)
+		               (window-height   . 0.23)))
+    (setq flycheck-display-errors-function
+	        #'flycheck-display-error-messages-unless-error-list))
+  (add-hook 'prog-mode-hook 'chun/flycheck)
 
 
 
-  ;; end user-config
-  )
 
+    )
 
 ;; PYTHON
 (defun python-env-setup ()
@@ -544,153 +601,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (defun python-format-bindings ()
   (define-key python-mode-map [tab] 'yapfify-buffer))
 ;; <<<
-
-(defun c++-env-setup3 ()
-  (add-hook 'c++-mode-hook 'company-mode)
-  (add-hook 'c-mode-hook 'company-mode)
-  (add-hook 'c++-mode-hook 'iron-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-  (add-hook 'c-mode-hook 'flycheck-mode)
-
-  (defun my-irony-mode-hook ()
-    (define-key irony-mode-map [remap completion-at-point]
-      'irony-completion-at-point)
-    (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point))
-
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-  ;; use company
-  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-  (setq company-backends (delete 'company-semantic company-backends))
-  (eval-after-load 'company
-    '(add-to-list
-      'company-backends '('company-irony-c-headers company-irony)))
-
-  ;; run company manually
-  (setq company-idle-delay 0.5)
-  (define-key c-mode-map [(tab)] 'company-complete)
-  (define-key c++-mode-map [(tab)] 'company-complete)
-
-  ;; use flycheck
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-  (eval-after-load 'flycheck
-    '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
-    )
-
-
-  ) ;; end setup3
-
-(defun c++-env-setup2()
-  (add-hook 'irony-mode-hook 'irony-eldoc)
-  (add-to-list 'company-backends 'company-irony)
-  (add-to-list 'company-backends 'company-irony-c-headers)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'company-mode)
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-  (add-hook 'c++-mode-hook '(lambda () (
-                                        (progn
-                                          (company-mode 1)
-                                          (flycheck-irony-setup)
-                                          (flycheck-mode 1)
-                                          (irony-mode 1)
-                                          )
-                                        )))
-
-  (eval-after-load 'flycheck '(lambda()
-                             (setq flycheck-gcc-language-standard "c++11")
-                             (setq flycheck-clang-include-path
-                                   '(
-                                     "/usr/include/c++/5"
-                                     "/home/chunwei/project/cinn2"
-                                     ))))
-
-  )
-
-;; C++
-(defun c++-env-setup()
-  "Setup the c++ environment"
-  (progn
-    ;; irony
-    (add-hook 'c++-mode-hook 'irony-mode)
-    (add-hook 'c++-mode-hook 'company-mode)
-    (add-hook 'c-mode-hook 'irony-mode)
-
-
-    (eval-after-load 'company
-      '(lambda () (
-                   (progn
-
-                     ;; remove all the predefined backends
-                     (setf company-backends '())
-                     (add-to-list 'company-backends 'company-keywords)
-
-                     ))))
-
-    (eval-after-load 'irony-mode
-      '(lambda () (progn
-                    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-                    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-                    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-                    (add-to-list 'company-backends 'company-irony)
-                    (add-to-list 'company-backends 'company-irony-c-headers)
-
-                    )))
-
-
-  (defun my-irony-mode-hook ()
-    (define-key irony-mode-map [remap completion-at-point]
-      'irony-completion-at-point-async)
-    (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point-async))
-
-
-  ;; (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-  ;; (setq company-backends (delete 'company-semantic company-backends))
-  ;; (eval-after-load 'company
-  ;;   '(add-to-list
-  ;;     'company-backends 'company-irony))
-
-  ;; (require 'company-irony-c-headers)
-  ;; (eval-after-load 'company
-  ;;   '(add-to-list
-  ;;     'company-backends '(company-irony-c-headers company-irony)))
-
-  ;; (setq company-idle-delay 0.5)
-
-  (define-key c-mode-map (kbd "M-,") 'company-complete)
-  (define-key c++-mode-map (kbd "M-,") 'company-complete)
-
-  ;; ;; start company mode automatically
-  ;; (add-hook 'c++-mode-hook '(lambda () (company-mode)))
-  ;; (add-hook 'c-mode-hook '(lambda () (company-mode)))
-
-  ;; flycheck
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-  (add-hook 'c-mode-hook 'flycheck-mode)
-
-  ;; (eval-after-load 'flycheck '(lambda()
-  ;;                            (setq flycheck-gcc-language-standard "c++11")
-  ;;                            (setq flycheck-clang-include-path
-  ;;                                  '(
-  ;;                                    "/usr/include/c++/5"
-  ;;                                    "/home/chunwei/project/cinn2"
-  ;;                                    ))
-  ;;                            )
-  ;;           )
-
-  (eval-after-load 'flycheck
-    '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)))
-
-  (chun/--etags-setup)
-
-  )
-;; end c++
 
 
 (defun chun/--etags-setup ()
