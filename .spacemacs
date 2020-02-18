@@ -536,6 +536,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 - auto error detect with flycheck
 - auto compile db generation with cmake-ide
 "
+
+  ;; Treat _ as part of the word.
+  (with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    (setq-default evil-symbol-word-search t))
+
   ;; config cmake-ide, which can generate the compiilation database automatically.
   ;; it can compile the project easily.
   ;; It is the key to c++ auto complete feature, works fine with irony.
@@ -585,9 +591,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (setq flycheck-display-errors-function
 	        #'flycheck-display-error-messages-unless-error-list))
   (add-hook 'prog-mode-hook 'chun/flycheck)
-
-
-
 
     )
 
