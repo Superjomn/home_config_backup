@@ -460,7 +460,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
   (chun/setup-youdao)
 
-  ) ;; end user-config
+) ;; end user-config
 
 
 (load "~/project/home_backup/chun")

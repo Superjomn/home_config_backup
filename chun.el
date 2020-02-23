@@ -194,3 +194,7 @@
   (interactive)
   (elisp-format-buffer)
   (delete-trailing-whitespace))
+
+(defun chun/insert-date ()
+  (interactive)
+  (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
