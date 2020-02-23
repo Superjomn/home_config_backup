@@ -63,7 +63,7 @@ values."
                                                      irony
                                                      irony-eldoc
                                                      flycheck-irony
-                                                     company-irony
+                                                     company-irony   ;; help to jump to function definitions
 
                                                      rtags
                                                      company-rtags
@@ -79,9 +79,17 @@ values."
                                                      company-irony
                                                      flycheck-irony
 
+                                                     ;; wrapper for hugo - a golang powered blog system.
                                                      ox-hugo
 
+                                                     ;; required by irony, make c++ programming easier.
                                                      cmake-ide
+
+                                                     ;; help to query API docs like dash in Mac.
+                                                     ;; helm-dash
+
+                                                     ;; pyim
+                                                     youdao-dictionary
                                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -351,8 +359,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
                  ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
   (setq org-latex-listings t)
 
-  (require 'org-download)
-  (add-hook 'dired-mode-hook 'org-download-enable)
+  ;; (require 'org-download)
+  ;; (add-hook 'dired-mode-hook 'org-download-enable)
+
+  (require 'org-drill)
+
+  ;; (chun/setup-pyim-environment)
 
   ;; end user-config
   )
@@ -375,38 +387,7 @@ you should place your code here."
   (define-key evil-normal-state-map "vk" 'evil-window-top)
   (define-key evil-normal-state-map "vj" 'evil-window-bottom)
 
-  ;; auto insert code
-  (defun org-insert-src-block (src-code-type)
-    "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
-    (interactive (let ((src-code-types '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++"
-                                         "css" "calc" "asymptote" "dot" "gnuplot" "ledger"
-                                         "lilypond" "mscgen" "octave" "oz" "plantuml" "R" "sass"
-                                         "screen" "sql" "awk" "ditaa" "haskell" "latex" "lisp"
-                                         "matlab" "ocaml" "org" "perl" "ruby" "scheme" "sqlite")))
-                   (list (ido-completing-read "Source code type: " src-code-types))))
-    (progn (newline-and-indent)
-           (insert (format "#+BEGIN_SRC %s\n" src-code-type))
-           (newline-and-indent)
-           (insert "#+END_SRC\n")
-           (previous-line 2)
-           (org-edit-src-code)))
-  (add-hook 'org-mode-hook '(lambda ()
-                              ;; keybiding for insert source code
-                              (local-set-key (kbd "C-c s") 'org-insert-src-block)))
-  ;; add support for exectuate c++ in org-mode
-  (org-babel-do-load-languages 'org-babel-load-languages '((C . t)
-                                                           (python . t)
-                                                           (latex . t)
-                                                           ))
-
-  ;; Bind clang-format-buffer to tab on the c++-mode only:
-  (add-hook 'c++-mode-hook 'clang-format-bindings)
-  (defun clang-format-bindings ()
-    (define-key c++-mode-map [tab] 'clang-format-buffer))
-
-  ;; set google c style
-  (add-hook 'c-mode-common-hook 'google-set-c-style)
-  (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+  (chun/setup-org-babel-env)
 
   ;; yas set path
   (setq yas-snippet-dirs '("/home/chunwei/project/yas-snippets"))
@@ -465,50 +446,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
        ))
     )
 
-  (defun chun/insert-cpp-src ()
-    (interactive)
-    (insert "#+BEGIN_SRC C++ :includes <iostream> <vector> <algorithm> :namespaces std :flags -std=c++11 :results output\n")
-    (insert "#+END_SRC\n"))
-
-  (defun chun/jump-to-header ()
-    "jump to header file."
-    (interactive)
-    (let* ((cur-file (buffer-file-name))
-           suffix-pos
-           header-file)
-      (setq suffix-pos (cl-search "." cur-file :from-end t))
-      (setq header-file (format "%s.%s"
-                                (cl-subseq cur-file 0 suffix-pos)
-                                "h"))
-      (switch-to-buffer (find-file-noselect header-file))))
-
-  (defun chun/jump-to-source ()
-    "jump to source file."
-    (interactive)
-    (let* ((cur-file (buffer-file-name))
-           suffix-pos
-           header-file)
-      (setq suffix-pos (cl-search "." cur-file :from-end t))
-      (setq header-file (format "%s.%s"
-                                (cl-subseq cur-file 0 suffix-pos)
-                                "cc"))
-      (switch-to-buffer (find-file-noselect header-file))))
-
-  (defun chun/--get-suffix (file)
-    "get file suffix"
-    (let* (suffix-pos)
-      (setq suffix-pos (cl-search "." file :from-end t))
-      (substring file suffix-pos nil)))
-
-  (defun chun/jump-to-header-or-source ()
-    "jump to header file if current file is source file, or else."
-    (interactive)
-    (let* ((cur-file (buffer-file-name))
-           (suffix (chun/--get-suffix cur-file)))
-      (message "suffix %s" suffix)
-      (if (string-equal suffix ".h")
-          (chun/jump-to-source)
-        (chun/jump-to-header))))
 
   ;; set highlight a word
   (global-unset-key [f2])
@@ -519,128 +456,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
   (chun/c++-env-setup)
 
+  (chun/dash-setup)
+
+  (chun/setup-youdao)
+
   ) ;; end user-config
 
-(defun chun/local-set-keys (key-commands)
-  "Set multiple local bindings with KEY-COMMANDS list."
-  (let ((local-map (current-local-map)))
-    (dolist (kc key-commands)
-      (define-key local-map
-	      (kbd (car kc))
-	      (cdr kc)))))
 
-;; C++
-(defun chun/c++-env-setup ()
-  "Setup the c++ environment with following features:
-- auto complete with irony
-- auto error detect with flycheck
-- auto compile db generation with cmake-ide
-"
-
-  ;; Treat _ as part of the word.
-  (with-eval-after-load 'evil
-    (defalias #'forward-evil-word #'forward-evil-symbol)
-    (setq-default evil-symbol-word-search t))
-
-  ;; config cmake-ide, which can generate the compiilation database automatically.
-  ;; it can compile the project easily.
-  ;; It is the key to c++ auto complete feature, works fine with irony.
-  (add-hook 'c++-mode-hook '(lambda()
-		                          (cmake-ide-setup)
-		                           ))
-  ;; set the build directory for cmake-ide, or it will generate random paths and lose control.
-  (eval-after-load 'cmake-ide
-    ;; (setq cmake-ide-build-pool-dir "/home/chunwei/project/cinn2/build")
-    ;; (setq cmake-ide-build-dir "/home/chunwei/project/cinn2/build")
-    (setq cmake-ide-dir "/home/chunwei/project/cinn2/build")
-    )
-
-  (defun chun/irony ()
-    "Irony mode configuration."
-    (interactive)
-
-    ;; should require the dependencies first, or it will fail to setq.
-    (require 'company)
-    (require 'irony)
-    (require 'flycheck)
-
-    (add-hook 'irony-mode-hook 'irony-eldoc)
-    (add-to-list 'company-backends 'company-irony)
-    (add-to-list 'company-backends 'company-irony-c-headers)
-    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-    (add-hook 'flycheck-mode-hook 'flycheck-irony-setup)
-    (when (or (eq major-mode 'c-mode)	; Prevent from being loaded by c derived mode
-	            (eq major-mode 'c++-mode))
-      (irony-mode 1)))
-
-  (add-hook 'c++-mode-hook 'chun/irony)
-  (add-hook 'c++-mode-hook 'company-mode)
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'flycheck-mode)
-
-  ;; set up flycheck prompt style.
-  (defun chun/flycheck ()
-    "Configurate flycheck."
-    (add-to-list 'display-buffer-alist
-	               `(,(rx bos "*Flycheck errors*" eos)
-		               (display-buffer-reuse-window
-		                display-buffer-in-side-window)
-		               (side            . bottom)
-		               (reusable-frames . visible)
-		               (window-height   . 0.23)))
-    (setq flycheck-display-errors-function
-	        #'flycheck-display-error-messages-unless-error-list))
-  (add-hook 'prog-mode-hook 'chun/flycheck)
-
-    )
-
-;; PYTHON
-(defun python-env-setup ()
-  "Setup the python environment"
-  (progn
-    (add-hook 'python-mode-hook 'yapf-mode)
-    (add-hook 'python-mode-hook 'python-format-bindings)
-    ))
-(defun python-format-bindings ()
-  (define-key python-mode-map [tab] 'yapfify-buffer))
-;; <<<
-
-
-(defun chun/--etags-setup ()
-  "set up the counsel-etags"
-  (progn
-    (eval-after-load 'counsel-etags
-      '(progn
-         (push "cmake-build-debug" counsel-etags-ignore-directories)
-         (push "cmake-build-release" counsel-etags-ignore-directories)
-         (push "build" counsel-etags-ignore-directories)
-         (push "*.o" counsel-etags-ignore-filenames)
-         (push "*.py" counsel-etags-ignore-filenames)
-         (push "*.pyc" counsel-etags-ignore-filenames)
-         ))
-    (define-key c++-mode-map [f1] 'counsel-etags-find-tag-at-point)
-
-    ))
-
-
-(defun chun/copy-all-or-region ()
-  (interactive)
-  (if (use-region-p)
-      (progn
-        (kill-new (buffer-substring (region-beginning) (region-end)))
-        (message "Text selection copied!"))
-    (progn
-      (kill-new (buffer-string))
-      (message "Buffer content copied!"))))
-
-(defun chun/highlight-current-word ()
-  "Highlight the current word in the point"
-  (interactive)
-  (let*((word (thing-at-point 'word 'no-properties)))
-    (progn
-      (unhighlight-regexp t)
-      (highlight-regexp word)
-      )))
+(load "~/project/home_backup/chun")
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -662,10 +485,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
  '(org-startup-indented t)
  '(package-selected-packages
    (quote
-    (cargo toml-mode racer flycheck-rust rust-mode counsel-etags company-web company-tern darktooth-theme zenburn-theme zen-and-art-theme yaml-mode white-sand-theme web-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme slim-mode seti-theme scss-mode sass-mode reverse-theme rebecca-theme railscasts-theme purple-haze-theme pug-mode professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme helm-css-scss hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme emmet-mode dracula-theme django-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme web-completion-data color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ox-hugo livid-mode json-mode js2-refactor web-beautify skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode js-doc tern coffee-mode cmake-mode ag flycheck-rtags company-irony-c-headers company-rtags auto-complete-clang rtags cmake-ide levenshtein flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (youdao-dictionary names chinese-word-at-point pyim pyim-basedict helm-dash dash-docs cargo toml-mode racer flycheck-rust rust-mode counsel-etags company-web company-tern darktooth-theme zenburn-theme zen-and-art-theme yaml-mode white-sand-theme web-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme slim-mode seti-theme scss-mode sass-mode reverse-theme rebecca-theme railscasts-theme purple-haze-theme pug-mode professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme helm-css-scss hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme emmet-mode dracula-theme django-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme web-completion-data color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ox-hugo livid-mode json-mode js2-refactor web-beautify skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode js-doc tern coffee-mode cmake-mode ag flycheck-rtags company-irony-c-headers company-rtags auto-complete-clang rtags cmake-ide levenshtein flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+ '(safe-local-variable-values
+   (quote
+    ((cmake-ide-build-dir . "/home/chunwei/project/cinn2/build")
+     (cmake-ide-project-dir . "/home/chunwei/project/cinn2")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
