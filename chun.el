@@ -37,4 +37,32 @@ Used only for nevigation."
                            ("C-c r h"     .  rtags-location-stack-back)
                            ("C-c r l"   .    rtags-location-stack-forward)
                            ("C-c r r" .  rtags-rename-symbolrtags-next-match)))
+    (add-hook 'c++-mode-hook 'chun/rtags)
     (add-hook 'kill-emacs-hook 'rtags-quit-rdm)))
+
+(defun chun/semantic (MODE)
+  "Custom semantic mode.
+MODE: the major programming mode"
+  (let ((semantic-submodes '(global-semantic-decoration-mode
+                             global-semantic-idle-local-symbol-highlight-mode
+                             global-semantic-highlight-func-mode global-semanticdb-minor-mode
+                             global-semantic-mru-bookmark-mode global-semantic-idle-summary-mode
+                             global-semantic-stickyfunc-mode)))
+    (setq semantic-default-submodes (append semantic-default-submodes semantic-submodes)
+          semantic-idle-scheduler-idle-time 1)
+    (semanticdb-enable-gnu-global-databases 'MODE)
+    (semantic-mode 1)))
+
+(defun chun/cc-base-semantic ()
+  "Configuration for semantic."
+  (chun/local-set-keys '(("M-RET"   .  srefactor-refactor-at-point)
+                         ("C-c t"   .  senator-fold-tag-toggle)
+                         ("C-."     .  semantic-symref)
+                         ("M-."     .  semantic-ia-fast-jump)
+                         ("C-,"     .  semantic-mrub-switch-tags)))
+  (local-set-key (kbd "C-h ,") 'helm-semantic-or-imenu))
+
+(defun chun/setup-semantic ()
+  (add-hook 'c++-mode-hook '(lambda ()
+                              (chun/semantic 'c++-mode)))
+  (add-hook 'c++-mode-hook 'chun/cc-base-semantic))

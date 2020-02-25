@@ -529,6 +529,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
   (chun/setup-rtags)
 
+  (chun/setup-semantic)
+
   ) ;; end user-config
 
 (defun chun/local-set-keys (key-commands)
