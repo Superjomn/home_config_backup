@@ -59,6 +59,8 @@ values."
                                                      ;; counsel
                                                      cmake-mode
 
+                                                     helm-ag
+
                                                      ;; irony related
                                                      irony
                                                      irony-eldoc
@@ -357,6 +359,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; end user-config
   )
 
+
+(load "~/project/home_backup/chun")
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -593,18 +598,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (add-hook 'prog-mode-hook 'chun/flycheck)
 
     )
-
-;; PYTHON
-(defun python-env-setup ()
-  "Setup the python environment"
-  (progn
-    (add-hook 'python-mode-hook 'yapf-mode)
-    (add-hook 'python-mode-hook 'python-format-bindings)
-    ))
-(defun python-format-bindings ()
-  (define-key python-mode-map [tab] 'yapfify-buffer))
-;; <<<
-
 
 (defun chun/--etags-setup ()
   "set up the counsel-etags"
