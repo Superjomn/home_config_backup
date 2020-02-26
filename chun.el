@@ -37,8 +37,8 @@ Used only for nevigation."
                            ("C-c r h"     .  rtags-location-stack-back)
                            ("C-c r l"   .    rtags-location-stack-forward)
                            ("C-c r r" .  rtags-rename-symbolrtags-next-match)))
-    (add-hook 'c++-mode-hook 'chun/rtags)
-    (add-hook 'kill-emacs-hook 'rtags-quit-rdm)))
+    (add-hook 'kill-emacs-hook 'rtags-quit-rdm))
+  (add-hook 'c++-mode-hook 'chun/rtags))
 
 (defun chun/semantic (MODE)
   "Custom semantic mode.
@@ -50,7 +50,7 @@ MODE: the major programming mode"
                              global-semantic-stickyfunc-mode)))
     (setq semantic-default-submodes (append semantic-default-submodes semantic-submodes)
           semantic-idle-scheduler-idle-time 1)
-    (semanticdb-enable-gnu-global-databases 'MODE)
+    ;; (semanticdb-enable-gnu-global-databases 'MODE)
     (semantic-mode 1)))
 
 (defun chun/cc-base-semantic ()
@@ -66,3 +66,8 @@ MODE: the major programming mode"
   (add-hook 'c++-mode-hook '(lambda ()
                               (chun/semantic 'c++-mode)))
   (add-hook 'c++-mode-hook 'chun/cc-base-semantic))
+
+(defun chun/turnon-semantic()
+  (interactive)
+  (chun/semantic 'c++-mode)
+  (chun/cc-base-semantic))
