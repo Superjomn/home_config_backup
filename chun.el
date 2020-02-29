@@ -36,6 +36,7 @@ Used only for nevigation."
                            ("C-c r ?"     .  rtags-find-references-at-point)
                            ("C-c r h"     .  rtags-location-stack-back)
                            ("C-c r l"   .    rtags-location-stack-forward)
+                           ("C-c r f"   . rtags-find-symbol)
                            ("C-c r r" .  rtags-rename-symbolrtags-next-match)))
     (add-hook 'kill-emacs-hook 'rtags-quit-rdm))
   (add-hook 'c++-mode-hook 'chun/rtags))
@@ -67,7 +68,16 @@ MODE: the major programming mode"
                               (chun/semantic 'c++-mode)))
   (add-hook 'c++-mode-hook 'chun/cc-base-semantic))
 
+(setq dotspacemacs-helm-position 'right)
+
 (defun chun/turnon-semantic()
   (interactive)
   (chun/semantic 'c++-mode)
   (chun/cc-base-semantic))
+
+(defun chun/pre-commit ()
+  "Run pre-commit on the current directory"
+  (interactive)
+  (let* ((file-dir (file-name-directory (buffer-file-name))))
+    (message (format "current dir: %s" file-dir))
+    (shell-command "pre-commit")))
