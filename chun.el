@@ -75,9 +75,16 @@ MODE: the major programming mode"
   (chun/semantic 'c++-mode)
   (chun/cc-base-semantic))
 
+
 (defun chun/pre-commit ()
   "Run pre-commit on the current directory"
   (interactive)
   (let* ((file-dir (file-name-directory (buffer-file-name))))
     (message (format "current dir: %s" file-dir))
     (shell-command "pre-commit")))
+
+(defun chun/--current-directory ()
+  "get the current directory"
+  (interactive)
+  (message default-directory)
+    )
