@@ -76,8 +76,20 @@ MODE: the major programming mode"
   (chun/cc-base-semantic))
 
 (defun chun/pre-commit ()
-  "Run pre-commit on the current directory"
+  "run pre-commit in projectile directory"
   (interactive)
-  (let* ((file-dir (file-name-directory (buffer-file-name))))
-    (message (format "current dir: %s" file-dir))
-    (shell-command "pre-commit")))
+  (let* ((temp-buffer-name "*pre-commit*")
+         (chun-temp-buffer)
+         (cur-window))
+    (setq chun-temp-buffer (generate-new-buffer temp-buffer-name))
+    (message "new buffer %s" chun-temp-buffer)
+    (setq cur-window (selected-window))
+    (split-window-below)
+    (other-window 1)
+    (with-current-buffer chun-temp-buffer (insert "hello world"))
+    (switch-to-buffer chun-temp-buffer)
+    (message "execute pre-commit in directory: %s" (projectile-project-root))
+
+    ;; switch directory
+    (let* ((default-directory (projectile-project-root)))
+      (insert (shell-command-to-string "pre-commit -a")))))
