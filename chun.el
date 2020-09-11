@@ -86,10 +86,10 @@ MODE: the major programming mode"
     (setq cur-window (selected-window))
     (split-window-below)
     (other-window 1)
-    (with-current-buffer chun-temp-buffer (insert "hello world"))
+    ;; (with-current-buffer chun-temp-buffer (insert "hello world"))
     (switch-to-buffer chun-temp-buffer)
     (message "execute pre-commit in directory: %s" (projectile-project-root))
 
     ;; switch directory
     (let* ((default-directory (projectile-project-root)))
-      (insert (shell-command-to-string "pre-commit -a")))))
+      (insert (shell-command-to-string "pre-commit run -a")))))
