@@ -15,6 +15,11 @@
   :type '(string)
   :group 'spring)
 
+(defcustom spring-browser-bin "/usr/bin/google-chrome"
+  "path to system's browser"
+  :type '(string)
+  :group 'spring)
+
 (defconst spring-browser-index '(("google" . "https://www.google.com/"))
   "The browser candidates")
 
@@ -23,25 +28,37 @@
 (defvar spring-rpc-server nil
   "The RPC server instance")
 
+
 (defun spring--initialize-rpc-server ()
   "Initialize the RPC server"
+  (if spring-rpc-server (epc:stop-epc spring-rpc-server))
   (if (< spring-rpc-server-port 0)
       (progn (message "start a new RPC server")
              (setq spring-rpc-server (--spring--start-local-rpc-server)))
     (progn (message (format "Connect to remote RPC server with port [%d]" spring-rpc-server-port))
-           (--spring--reuse-local-rpc-server))))
+           (--spring--connect-local-rpc-server)
+           (message-box "successfully connected to service")
+           (--spring--server-set-browser-bin))))
 
 (defun --spring--start-local-rpc-server ()
   "Start a local RPC server"
   (epc:start-epc "python" (list spring-rpc-server-file)))
 
-(defun --spring--reuse-local-rpc-server ()
-  "Reuse a local RPC server with sepcified port"
+(defun --spring--connect-local-rpc-server ()
+  "Connect to a local RPC server with sepcified port"
   (setq spring-rpc-server (epc:start-epc "echo" (list (number-to-string spring-rpc-server-port))))
   (message (format "Successfully connected to localhost on port [%d]" spring-rpc-server-port)))
 
-(spring--initialize-rpc-server)
-;; (epc:call-sync spring-rpc-server 'echo '("hello"))
+(defun --spring--server-set-browser-bin ()
+  "Pass the customized variable 'spring-browser-bin' to RPC server"
+  (cl-assert
+   (file-exists-p spring-browser-bin)
+   t
+   (format "The brower bin not exists in path %S" spring-browser-bin))
+  (cl-assert
+   spring-rpc-server)
+  (message "set RPC server browser bin to %s" spring-browser-bin)
+  (epc:call-sync spring-rpc-server 'set_browser_bin (list spring-browser-bin)))
 
 (defun spring-echo ()
   "Echo something to test the RPC service"
@@ -52,7 +69,8 @@
 
 (setq spring-site-map '(("google" . "https://www.google.com")
                         ("github" . "https://github.com/")
-                        ("cinn" . "https://github.com/Superjomn/CINN")))
+                        ("cinn" . "https://github.com/Superjomn/CINN")
+                        ("cinn pr" . "https://github.com/Superjomn/CINN/pulls")))
 
 (defun --spring--dict-get (dict name)
   "get a record from a dictorary"
@@ -62,12 +80,18 @@
 (defun spring-open-url ()
   "browser open a url"
   (interactive)
-  (let* (site url)
-    (setq site (completing-read "site:" '(("google" 1)
-                                          ("github" 2)
-                                          ("cinn" 3)) nil t ""))
-    (setq url (--spring--dict-get spring-site-map site))
-    (message (format "Selected site: [%S]" url))
-    (cl-assert
-     (stringp url))
-    (epc:call-sync spring-rpc-server 'browser_open_url (list url))))
+  (let* (helm-source url)
+    (setq helm-source `((name . "Bookmarks")
+                        (candidates . ,(mapcar 'car spring-site-map))
+                        (action . (lambda (candidate)
+                                    (setq url (--spring--dict-get spring-site-map candidate))
+                                    (epc:call-sync spring-rpc-server 'browser_open_url (list
+                                                                                        url))))))
+    (helm :sources '(helm-source))))
+
+
+
+;; === main ===
+
+(spring--initialize-rpc-server)
+;; (epc:call-sync spring-rpc-server 'echo '("hello"))
