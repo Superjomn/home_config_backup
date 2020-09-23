@@ -421,6 +421,18 @@ you should place your code here."
                                                            (latex . t)
                                                            ))
 
+  ;; configure agenda
+  (setq org-agenda-files '("~/centra/info_center/agenda.org"
+                           "~/centra/info_center/life-agenda.org"
+                           ))
+  (setq org-agenda-custom-commands
+        '(("c" "Simple agenda view"
+           ((agenda "")
+            (alltodo "")))))
+
+
+
+
   ;; Bind clang-format-buffer to tab on the c++-mode only:
   (add-hook 'c++-mode-hook 'clang-format-bindings)
   (defun clang-format-bindings ()

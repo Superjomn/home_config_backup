@@ -83,6 +83,7 @@
   (let* (helm-source url)
     (setq helm-source `((name . "Bookmarks")
                         (candidates . ,(mapcar 'car spring-site-map))
+                        (fuzzy-match . t)
                         (action . (lambda (candidate)
                                     (setq url (--spring--dict-get spring-site-map candidate))
                                     (epc:call-sync spring-rpc-server 'browser_open_url (list
