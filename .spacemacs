@@ -79,8 +79,6 @@ values."
                                                      company-irony-c-headers
                                                      counsel-etags
 
-                                                     ;; org-drill
-
                                                      ag
                                                      yapfify
 
@@ -88,12 +86,9 @@ values."
                                                      company-irony
                                                      flycheck-irony
 
-                                                     ;; tablegen-mode  ;; for llvm
-
                                                      ox-hugo
 
                                                      srefactor
-                                                     ;; cmake-ide
 
                                                      atomic-chrome
 
@@ -405,29 +400,7 @@ you should place your code here."
   (define-key evil-normal-state-map "vk" 'evil-window-top)
   (define-key evil-normal-state-map "vj" 'evil-window-bottom)
 
-  ;; auto insert code
-  (defun org-insert-src-block (src-code-type)
-    "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
-    (interactive (let ((src-code-types '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++"
-                                         "css" "calc" "asymptote" "dot" "gnuplot" "ledger"
-                                         "lilypond" "mscgen" "octave" "oz" "plantuml" "R" "sass"
-                                         "screen" "sql" "awk" "ditaa" "haskell" "latex" "lisp"
-                                         "matlab" "ocaml" "org" "perl" "ruby" "scheme" "sqlite")))
-                   (list (ido-completing-read "Source code type: " src-code-types))))
-    (progn (newline-and-indent)
-           (insert (format "#+BEGIN_SRC %s\n" src-code-type))
-           (newline-and-indent)
-           (insert "#+END_SRC\n")
-           (previous-line 2)
-           (org-edit-src-code)))
-  (add-hook 'org-mode-hook '(lambda ()
-                              ;; keybiding for insert source code
-                              (local-set-key (kbd "C-c s") 'org-insert-src-block)))
-  ;; add support for exectuate c++ in org-mode
-  (org-babel-do-load-languages 'org-babel-load-languages '((C . t)
-                                                           (python . t)
-                                                           (latex . t)
-                                                           ))
+  (load "~/centra/config_backup/chun-org-babel-config.el")
 
   ;; configure agenda
   (setq org-agenda-files '("~/centra/info_center/agenda.org"
@@ -576,8 +549,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
   (if (file-exists-p "~/centra/config_backup/tablegen-model.el")
       (load "~/centra/config_backup/tablegen-model.el")
-    (add-to-list 'auto-mode-alist '("\\.td\\'" . tablegen-mode)))
-
+    (eval-after-load 'tablegen-mode
+      (add-to-list 'auto-mode-alist (cons (purecopy "\\.td\\'") 'tablegen-mode))
+      ))
 
   ) ;; end user-config
 
