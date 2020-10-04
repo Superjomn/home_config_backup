@@ -79,7 +79,7 @@ values."
                                                      company-irony-c-headers
                                                      counsel-etags
 
-                                                     org-drill
+                                                     ;; org-drill
 
                                                      ag
                                                      yapfify
@@ -88,7 +88,7 @@ values."
                                                      company-irony
                                                      flycheck-irony
 
-                                                     tablegen-mode  ;; for llvm
+                                                     ;; tablegen-mode  ;; for llvm
 
                                                      ox-hugo
 
@@ -374,6 +374,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (require 'org-download)
   ;; (add-hook 'dired-mode-hook 'org-download-enable)
 
+  (eval-after-load 'org-drill
+    (require 'org-drill)
+    )
+
   ;; end user-config
   )
 
@@ -570,8 +574,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (setq HUGO_BASE_DIR "~/project/hugo-blog-generator/")
 
 
-  (load "~/centra/config_backup/tablegen-model.el")
-  (add-to-list 'auto-mode-alist '("\\.td\\'" . tablegen-mode))
+  (if (file-exists-p "~/centra/config_backup/tablegen-model.el")
+      (load "~/centra/config_backup/tablegen-model.el")
+    (add-to-list 'auto-mode-alist '("\\.td\\'" . tablegen-mode)))
+
 
   ) ;; end user-config
 
@@ -699,6 +705,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
  '(org-latex-pdf-process
    (quote
     ("xelatex -interaction nonstopmode -shell-escape %f" "xelatex -interaction nonstopmode -shell-escape %f" "xelatex -interaction nonstopmode -shell-escpae %f")))
+ '(org-learn-fraction 0.3)
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-mouse org-rmail org-w3m org-depend org-drill org-toc)))
