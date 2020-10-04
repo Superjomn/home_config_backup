@@ -1,3 +1,5 @@
+(load-relative "chun-logging")
+
 (defun chun/local-set-keys (key-commands)
   "Set multiple local bindings with KEY-COMMANDS list."
   (let ((local-map (current-local-map)))

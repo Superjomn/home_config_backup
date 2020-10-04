@@ -1,6 +1,7 @@
 ;; This file contains some org-babel configurations
 
 (require 'cl-lib)
+(load-relative "chun-logging")
 
 
 ;; auto insert code
@@ -46,8 +47,8 @@
                                 (setq found t)
                                 (setq org-babel-C++-compiler candidate)))))))
     (if (string-empty-p modern-gcc-path)
-        (message-box "Error, no modern C++ compiler found")
-      (message "Found modern C++ compiler locates in %s" modern-gcc-path))))
+        (chun--log-fatal "Error, no modern C++ compiler found")
+      (chun--log-warn "Found modern C++ compiler locates in %s" modern-gcc-path))))
 
 (defun chun/--org-babel-set-default-varialbes ()
   "set default variables for org-babel C++ and python mode"
