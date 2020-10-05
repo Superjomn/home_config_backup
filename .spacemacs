@@ -94,6 +94,8 @@ values."
 
                                                      atomic-chrome
 
+                                                     spinner
+
                                                      (python :variables python-backend 'anaconda
                                                              :variables python-formatter 'yapf
                                                              :variables python-format-on-save t)

@@ -58,7 +58,7 @@
           (:namespaces .
                        "std")
           (:includes .
-                     "<iostream> <vector> <tuple> <utility> <map>")
+                     "<iostream> <vector> <tuple> <utility> <map> <type_traits>")
           (:results .
                     "outputs"))))
 

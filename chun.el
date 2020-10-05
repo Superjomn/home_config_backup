@@ -1,3 +1,6 @@
+;; chun.el --- My emacs config -*- lexical-binding: t; no-byte-compile: t -*-
+;;; Version: 0.1
+
 (load-relative "chun-logging")
 
 (defun chun/local-set-keys (key-commands)
@@ -95,3 +98,5 @@ MODE: the major programming mode"
     ;; switch directory
     (let* ((default-directory (projectile-project-root)))
       (insert (shell-command-to-string "pre-commit run -a")))))
+
+;;; chun.el ends here
