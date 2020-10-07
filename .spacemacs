@@ -50,7 +50,7 @@ values."
                                        spell-checking
                                        syntax-checking version-control
 
-                                       myleetcode
+                                       ;; myleetcode
 
                                        ;; company-clang
                                        ;; flycheck
@@ -101,6 +101,13 @@ values."
                                                              :variables python-format-on-save t)
 
                                                      log4e
+
+                                                     dash
+                                                     graphql
+                                                     json
+                                                     aio
+                                                     spinner
+
 
                                                      )
    ;; A list of packages that cannot be updated.
@@ -393,8 +400,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (require 'cl-lib)
 
-  (setq leetcode-prefer-language "cpp")
-  (setq leetcode-prefer-sql "mysql")
+  ;; (setq leetcode-prefer-language "cpp")
+  ;; (setq leetcode-prefer-sql "mysql")
 
 
   ;; window split control
