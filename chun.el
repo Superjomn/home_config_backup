@@ -1,7 +1,9 @@
 ;; chun.el --- My emacs config -*- lexical-binding: t; no-byte-compile: t -*-
 ;;; Version: 0.1
 
-(load-relative "chun-logging")
+(with-eval-after-load 'load-relative
+  (load-relative "chun-logging")
+  )
 
 (defun chun/local-set-keys (key-commands)
   "Set multiple local bindings with KEY-COMMANDS list."
