@@ -30,7 +30,6 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers '(
-                                       php
                                        rust
                                        javascript
                                        ;; javascriptpython
@@ -38,6 +37,7 @@ values."
                                        yaml
                                        html
                                        themes-megapack
+                                       ;; slime
                                        ;; ----------------------------------------------------------------
                                        ;; Example of useful layers you may want to use right away.
                                        ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -47,11 +47,9 @@ values."
                                        org (shell :variables shell-default-height
                                                   30 shell-default-position 'bottom)
                                        ycmd
-                                       spell-checking
+                                       ;; spell-checking
                                        syntax-checking version-control
-
-                                       ;; myleetcode
-
+                                       myleetcode
                                        ;; company-clang
                                        ;; flycheck
                                        )
@@ -61,7 +59,6 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(google-c-style clang-format epc dash elisp-format
                                                      ;; counsel
-						     org-drill
                                                      cmake-mode
 
                                                      helm-ag
@@ -72,15 +69,18 @@ values."
                                                      flycheck-irony
                                                      company-irony
 
+                                                     ;; slime
                                                      ;; rtags
                                                      ;; company-rtags
+                                                     ;; rtags-helm
                                                      ;; helm-rtags
                                                      ;; flycheck-rtags
+                                                     load-relative
+
+                                                     org-drill
 
                                                      company-irony-c-headers
                                                      counsel-etags
-
-                                                     load-relative
 
                                                      ag
                                                      yapfify
@@ -92,24 +92,8 @@ values."
                                                      ox-hugo
 
                                                      srefactor
-
-                                                     atomic-chrome
-
-                                                     spinner
-
-                                                     (python :variables python-backend 'anaconda
-                                                             :variables python-formatter 'yapf
-                                                             :variables python-format-on-save t)
-
-                                                     log4e
-
-                                                     dash
-                                                     graphql
-                                                     json
-                                                     aio
-                                                     spinner
-
-
+                                                     cmake-ide
+                                                     org-journal
                                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -353,9 +337,16 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq configuration-layer--elpa-archives '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-                                             ("org-cn" . "http://elpa.zilongshanren.com/org/")
-                                             ("gnu-cn" . "http://elpa.zilongshanren.com/gnu/")))
+  (setq configuration-layer--elpa-archives
+      '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+        ("org-cn"   . "http://elpa.emacs-china.org/org/")
+        ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+
+  (setq url-proxy-services '(("https" . "127.0.0.1:12333")
+                             ("http" .  "127.0.0.1:12333")
+                             ("no_proxy" . "^.*zilongshanren.com")))
+
+
 
   ;; ox-hugo config
   ;; (use-package ox-hugo
@@ -369,18 +360,35 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; (org :variables
   ;;      org-enable-hugo-support t)
+  (with-eval-after-load 'org
+    (require 'ox-latex)
+    (add-to-list 'org-latex-classes
+                 '("beamer"
+                   "\\documentclass\[presentation\]\{beamer\}"
+                   ("\\section\{%s\}" . "\\section*\{%s\}")
+                   ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+                   ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+    (setq org-latex-listings t)
+    (add-hook 'org-mode-hook #'spacemacs/toggle-truncate-lines-off)
 
-  (require 'ox-latex)
-  (add-to-list 'org-latex-classes
-               '("beamer"
-                 "\\documentclass\[presentation\]\{beamer\}"
-                 ("\\section\{%s\}" . "\\section*\{%s\}")
-                 ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
-                 ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
-  (setq org-latex-listings t)
+    ;; (custom-set-variables
+    ;;  '(org-modules
+    ;;    (quote
+    ;;     (org-bbd org-bibtex org-drill)))
+    ;;  )
+    )
+
 
   ;; (require 'org-download)
   ;; (add-hook 'dired-mode-hook 'org-download-enable)
+
+
+
+  (add-hook 'c++-mode-hook
+            (lambda () (setq flycheck-clang-language-standard "c++17")))
+
+  ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "sbcl")
 
   ;; end user-config
   )
@@ -397,9 +405,6 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (require 'cl-lib)
 
-  ;; (setq leetcode-prefer-language "cpp")
-  ;; (setq leetcode-prefer-sql "mysql")
-
 
   ;; window split control
   (define-key evil-normal-state-map "vs" 'split-window-right-and-focus)
@@ -409,31 +414,31 @@ you should place your code here."
   (define-key evil-normal-state-map "vk" 'evil-window-top)
   (define-key evil-normal-state-map "vj" 'evil-window-bottom)
 
-  (load "~/centra/config_backup/chun-org-babel-config.el")
+  ;; auto insert code
+  (defun org-insert-src-block (src-code-type)
+    "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
+    (interactive (let ((src-code-types '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++"
+                                         "css" "calc" "asymptote" "dot" "gnuplot" "ledger"
+                                         "lilypond" "mscgen" "octave" "oz" "plantuml" "R" "sass"
+                                         "screen" "sql" "awk" "ditaa" "haskell" "latex" "lisp"
+                                         "matlab" "ocaml" "org" "perl" "ruby" "scheme" "sqlite")))
+                   (list (ido-completing-read "Source code type: " src-code-types))))
+    (progn (newline-and-indent)
+           (insert (format "#+BEGIN_SRC %s\n" src-code-type))
+           (newline-and-indent)
+           (insert "#+END_SRC\n")
+           (previous-line 2)
+           (org-edit-src-code)))
 
-  ;; configure agenda
-  (setq org-agenda-files '("~/centra/info_center/agenda.org"
-                           "~/centra/info_center/life-agenda.org"
-                           ))
-  (setq org-agenda-custom-commands
-        '(("c" "Simple agenda view"
-           ((agenda "")
-            (alltodo "")))))
-
-
-
-
-  ;; Bind clang-format-buffer to tab on the c++-mode only:
-  (add-hook 'c++-mode-hook 'clang-format-bindings)
-  (defun clang-format-bindings ()
-    (define-key c++-mode-map [tab] 'clang-format-buffer))
-
-  ;; set google c style
-  (add-hook 'c-mode-common-hook 'google-set-c-style)
-  (add-hook 'c-mode-common-hook 'google-make-newline-indent)
-
-  ;; yas set path
-  (setq yas-snippet-dirs '("~/centra/yas-snippets"))
+  (with-eval-after-load 'org
+    (add-hook 'org-mode-hook '(lambda ()
+                                ;; keybiding for insert source code
+                                (local-set-key (kbd "C-c s") 'org-insert-src-block)))
+    ;; add support for exectuate c++ in org-mode
+    (org-babel-do-load-languages 'org-babel-load-languages '((C . t)
+                                                             (python . t)
+                                                             (latex . t)
+                                                             ))
 
   ;; agenda
   (setq org-todo-keywords
@@ -485,9 +490,25 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (with-eval-after-load 'org
     (org-babel-do-load-languages
      'org-babel-load-languages
-     '((C . t)
-       ))
-    )
+     '((C . t)))
+    ))
+
+  ;; set org-indent-mode as default
+  (with-eval-after-load 'org
+    (add-hook 'org-mode-hook 'org-indent-mode))
+
+  ;; Bind clang-format-buffer to tab on the c++-mode only:
+  (add-hook 'c++-mode-hook 'clang-format-bindings)
+  (defun clang-format-bindings ()
+    (define-key c++-mode-map [tab] 'clang-format-buffer))
+
+  ;; set google c style
+  (add-hook 'c-mode-common-hook 'google-set-c-style)
+  (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+  ;; yas set path
+  (setq yas-snippet-dirs '("/home/chunwei/project/yas-snippets"))
+
 
   (defun chun/insert-cpp-src ()
     (interactive)
@@ -543,24 +564,24 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
   (chun/c++-env-setup)
 
+  ;; (add-to-list 'load-path "/home/chunwei/project/rtags/src/")
+  ;; (load "rtags")
+  ;; (load "helm-rtags")
+  ;; (load "company-rtags")
+  ;; (load "flycheck-rtags")
+
+
   ;; (chun/setup-rtags)
 
   (chun/setup-semantic)
 
-  (setq shell-file-name "/bin/zsh")
+  (setq  package-check-signature nil)
 
-  (setq org-image-actual-width nil)
+  (setq leetcode-prefer-language "cpp")
+  (setq leetcode-prefer-sql "mysql")
 
-  (atomic-chrome-start-server)
-
-  (setq HUGO_BASE_DIR "~/project/hugo-blog-generator/")
-
-
-  (if (file-exists-p "~/centra/config_backup/tablegen-model.el")
-      (load "~/centra/config_backup/tablegen-model.el")
-    (eval-after-load 'tablegen-mode
-      (add-to-list 'auto-mode-alist (cons (purecopy "\\.td\\'") 'tablegen-mode))
-      ))
+  ;; (eval-after-load 'org
+  ;;   (require 'org-drill))
 
   ) ;; end user-config
 
@@ -588,15 +609,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   ;; config cmake-ide, which can generate the compiilation database automatically.
   ;; it can compile the project easily.
   ;; It is the key to c++ auto complete feature, works fine with irony.
-  ;; (add-hook 'c++-mode-hook '(lambda()
-	;; 	                          (cmake-ide-setup)
-	;; 	                           ))
+  (add-hook 'c++-mode-hook '(lambda()
+		                          (cmake-ide-setup)
+		                           ))
   ;; set the build directory for cmake-ide, or it will generate random paths and lose control.
-  ;; (eval-after-load 'cmake-ide
-  ;;   ;; (setq cmake-ide-build-pool-dir "/home/chunwei/project/cinn2/build")
-  ;;   ;; (setq cmake-ide-build-dir "/home/chunwei/project/cinn2/build")
-  ;;   (setq cmake-ide-dir "/home/chunwei/project/cinn2/build")
-  ;;   )
+  ;; NOTE vital to set a different directory other than "cmake-build-debug", or the rtags will be disabled.
+  (eval-after-load 'cmake-ide
+    (setq cmake-ide-dir "/home/chunwei/project/cinn2/build")
+    )
 
   (defun chun/irony ()
     "Irony mode configuration."
@@ -680,29 +700,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil)
- '(org-agenda-files
-   (quote
-    ("~/project/myorgs/agenda.org" "~/project/myorgs/notes.org")))
- '(org-image-actual-width (quote (0)))
- '(org-latex-pdf-process
-   (quote
-    ("xelatex -interaction nonstopmode -shell-escape %f" "xelatex -interaction nonstopmode -shell-escape %f" "xelatex -interaction nonstopmode -shell-escpae %f")))
- '(org-learn-fraction 0.3)
- '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-mouse org-rmail org-w3m org-depend org-drill org-toc)))
- '(org-startup-indented t)
  '(package-selected-packages
-   (quote
-    (flycheck-ycmd transient company-ycmd load-relative org-drill persist phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode leetcode aio atomic-chrome gnu-elpa-keyring-update markdown-preview-mode web-server websocket srefactor helm-rtags cargo toml-mode racer flycheck-rust rust-mode counsel-etags company-web company-tern darktooth-theme zenburn-theme zen-and-art-theme yaml-mode white-sand-theme web-mode underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme slim-mode seti-theme scss-mode sass-mode reverse-theme rebecca-theme railscasts-theme purple-haze-theme pug-mode professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme helm-css-scss hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme emmet-mode dracula-theme django-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme web-completion-data color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme ox-hugo livid-mode json-mode js2-refactor web-beautify skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode js-doc tern coffee-mode cmake-mode ag flycheck-rtags company-irony-c-headers company-rtags auto-complete-clang rtags cmake-ide levenshtein flycheck-irony counsel swiper ivy company-irony flyspell-correct-helm flyspell-correct ycmd request-deferred auto-dictionary irony-eldoc irony elisp-format epc ctable concurrent deferred yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic clang-format google-c-style xterm-color unfill smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub treepy let-alist graphql with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
- '(safe-local-variable-values
-   (quote
-    ((cmake-ide-build-dir . "/home/chunwei/project/cinn2/build")
-     (cmake-ide-project-dir . "/home/chunwei/project/cinn2")))))
+   '(persist org-drill load-relative zenburn-theme zen-and-art-theme yapfify yaml-mode xterm-color ws-butler winum white-sand-theme which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme srefactor spaceline spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme restart-emacs rebecca-theme rainbow-delimiters railscasts-theme racer pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el paradox ox-hugo orgit organic-green-theme org-present org-pomodoro org-mime org-journal org-download org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme neotree naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow madhat2r-theme macrostep lush-theme lorem-ipsum livid-mode live-py-mode linum-relative link-hint light-soap-theme leetcode json-mode js2-refactor js-doc jbeans-theme jazz-theme irony-eldoc ir-black-theme inkpot-theme indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md gandalf-theme fuzzy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-irony flx-ido flatui-theme flatland-theme fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exotica-theme exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help epc emmet-mode elisp-slime-nav elisp-format dumb-jump dracula-theme django-theme diminish diff-hl define-word darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme counsel-etags company-ycmd company-web company-statistics company-irony-c-headers company-irony company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode cmake-mode cmake-ide clues-theme clean-aindent-mode clang-format cherry-blossom-theme cargo busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes aggressive-indent ag afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
+

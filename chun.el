@@ -3,6 +3,7 @@
 
 (with-eval-after-load 'load-relative
   (load-relative "chun-logging")
+  (load-relative "tablegen-mode")
   )
 
 (defun chun/local-set-keys (key-commands)
